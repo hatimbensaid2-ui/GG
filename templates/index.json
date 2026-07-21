@@ -1,78 +1,243 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero-banner",
       "settings": {
         "height": "full",
+        "overlay_opacity": 25,
+        "dark_text": false,
         "alignment": "center",
         "eyebrow": "New Season",
         "title": "Soft girl era starts here",
         "text": "Dreamy fits, coquette details and everyday cute — curated for your main character moment.",
         "button_label": "Shop new in",
+        "button_link": "",
         "button2_label": "Shop best sellers",
-        "overlay_opacity": 25
+        "button2_link": ""
       }
     },
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "b1": { "type": "item", "settings": { "text": "soft girl" } },
-        "b2": { "type": "item", "settings": { "text": "main character" } },
-        "b3": { "type": "item", "settings": { "text": "coquette" } },
-        "b4": { "type": "item", "settings": { "text": "new drops weekly" } }
+        "b1": {
+          "type": "item",
+          "settings": {
+            "text": "soft girl"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "text": "main character"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "text": "coquette"
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "text": "new drops weekly"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4"]
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "bg": "#e8a0b4"
+      }
     },
     "categories": {
       "type": "collection-list",
-      "settings": { "eyebrow": "Shop by", "title": "Shop by category", "columns": 3 },
       "blocks": {
-        "c1": { "type": "tile", "settings": { "title": "Dresses" } },
-        "c2": { "type": "tile", "settings": { "title": "Tops" } },
-        "c3": { "type": "tile", "settings": { "title": "Sets" } }
+        "c1": {
+          "type": "tile",
+          "settings": {
+            "collection": "",
+            "title": "Dresses"
+          }
+        },
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "collection": "",
+            "title": "Tops"
+          }
+        },
+        "c3": {
+          "type": "tile",
+          "settings": {
+            "collection": "",
+            "title": "Sets"
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3"]
+      "block_order": [
+        "c1",
+        "c2",
+        "c3"
+      ],
+      "settings": {
+        "eyebrow": "Shop by",
+        "title": "Shop by category",
+        "columns": 3
+      }
     },
     "bestsellers": {
       "type": "featured-collection",
-      "settings": { "eyebrow": "Trending", "title": "Best sellers", "limit": 8, "columns": 4, "button_label": "Shop all" }
+      "settings": {
+        "eyebrow": "Trending",
+        "title": "Best sellers",
+        "text": "",
+        "collection": "",
+        "limit": 8,
+        "columns": 4,
+        "button_label": "Shop all"
+      }
     },
     "image_text": {
       "type": "image-with-text",
       "settings": {
+        "reverse": false,
         "eyebrow": "Our promise",
         "title": "Made for the soft girl in you",
         "text": "<p>Every piece is chosen to feel like a hug — soft fabrics, flattering fits and colours that make you glow. Ethically sourced, endlessly cute.</p>",
-        "button_label": "About us"
+        "button_label": "About us",
+        "button_link": ""
       }
     },
     "newin": {
       "type": "featured-collection",
-      "settings": { "eyebrow": "Fresh", "title": "New in", "limit": 4, "columns": 4, "button_label": "Shop new in" }
+      "settings": {
+        "eyebrow": "Fresh",
+        "title": "New in",
+        "text": "",
+        "collection": "",
+        "limit": 4,
+        "columns": 4,
+        "button_label": "Shop new in"
+      }
     },
     "trust": {
       "type": "trust-badges",
       "blocks": {
-        "t1": { "type": "badge", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders over $60" } },
-        "t2": { "type": "badge", "settings": { "icon": "return", "title": "Easy returns", "text": "30-day hassle free" } },
-        "t3": { "type": "badge", "settings": { "icon": "sparkle", "title": "New every week", "text": "Fresh drops you'll love" } },
-        "t4": { "type": "badge", "settings": { "icon": "chat", "title": "Here to help", "text": "Sweet support, always" } }
+        "t1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping",
+            "text": "On orders over $90"
+          }
+        },
+        "t2": {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "title": "Easy returns",
+            "text": "30-day hassle free"
+          }
+        },
+        "t3": {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkle",
+            "title": "New every week",
+            "text": "Fresh drops you'll love"
+          }
+        },
+        "t4": {
+          "type": "badge",
+          "settings": {
+            "icon": "chat",
+            "title": "Here to help",
+            "text": "Sweet support, always"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "bg": "#fce9ee"
+      }
     },
     "testimonials": {
       "type": "testimonials",
       "blocks": {
-        "r1": { "type": "review", "settings": { "author": "Sofia R.", "quote": "Obsessed! The fit is so flattering and the fabric feels like a dream." } },
-        "r2": { "type": "review", "settings": { "author": "Maya L.", "quote": "Fast shipping and everything is even cuter in person. My new favourite shop." } },
-        "r3": { "type": "review", "settings": { "author": "Chloe T.", "quote": "The vibe is exactly what I wanted for my soft girl wardrobe. 10/10." } }
+        "r1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Obsessed! The fit is so flattering and the fabric feels like a dream.",
+            "author": "Sofia R."
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Fast shipping and everything is even cuter in person. My new favourite shop.",
+            "author": "Maya L."
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "The vibe is exactly what I wanted for my soft girl wardrobe. 10/10.",
+            "author": "Chloe T."
+          }
+        }
       },
-      "block_order": ["r1", "r2", "r3"]
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "eyebrow": "Loved by you",
+        "title": "The girls have spoken",
+        "columns": 3
+      }
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "settings": {
+        "eyebrow": "VIP list",
+        "title": "Get 10% off your first order",
+        "text": "Join for early access to drops, secret sales and soft girl inspo.",
+        "note": "No spam, just cute stuff. Unsubscribe anytime."
+      }
     }
   },
-  "order": ["hero", "marquee", "categories", "bestsellers", "image_text", "newin", "trust", "testimonials", "newsletter"]
+  "order": [
+    "hero",
+    "marquee",
+    "categories",
+    "bestsellers",
+    "image_text",
+    "newin",
+    "trust",
+    "testimonials",
+    "newsletter"
+  ]
 }

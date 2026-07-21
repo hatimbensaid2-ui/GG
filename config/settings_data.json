@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#FFF8F5",
@@ -25,11 +34,12 @@
     "cart_type": "drawer",
     "cart_free_shipping_bar": true,
     "cart_free_shipping_threshold": 60,
-    "social_instagram": "",
+    "social_instagram": "https://www.instagram.com/girlgeousdotcom",
     "social_tiktok": "",
     "social_pinterest": "",
     "social_youtube": "",
-    "social_facebook": ""
+    "social_facebook": "",
+    "content_for_index": []
   },
   "presets": {
     "Girlgeous": {
