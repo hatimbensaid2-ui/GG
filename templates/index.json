@@ -105,7 +105,7 @@
         "eyebrow": "Trending",
         "title": "Best sellers",
         "text": "",
-        "collection": "",
+        "collection": "best-sellers",
         "limit": 8,
         "columns": 4,
         "button_label": "Shop all"
