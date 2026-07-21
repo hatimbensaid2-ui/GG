@@ -12,6 +12,7 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
+        "image": "shopify://shop_images/IMG_3987.png",
         "height": "full",
         "overlay_opacity": 25,
         "dark_text": false,
