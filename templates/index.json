@@ -69,21 +69,21 @@
         "c1": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "boots",
             "title": "Dresses"
           }
         },
         "c2": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "dresses",
             "title": "Tops"
           }
         },
         "c3": {
           "type": "tile",
           "settings": {
-            "collection": "",
+            "collection": "matching-sets",
             "title": "Sets"
           }
         }
@@ -120,7 +120,7 @@
         "title": "Made for the soft girl in you",
         "text": "<p>Every piece is chosen to feel like a hug — soft fabrics, flattering fits and colours that make you glow. Ethically sourced, endlessly cute.</p>",
         "button_label": "About us",
-        "button_link": ""
+        "button_link": "shopify://pages/about-us"
       }
     },
     "newin": {
