@@ -1,0 +1,9 @@
+<div class="section"><div class="page-width page-width--narrow">
+  <div class="page-hero"><h1>{{ 'customer.addresses.title' | t }}</h1></div>
+  <p style="text-align:center;"><a href="{{ routes.account_url }}" class="link-underline">{{ 'customer.account.return' | t }}</a></p>
+  {%- for address in customer.addresses -%}
+    <div style="border:1px solid var(--color-border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;">
+      {{ address | format_address }}
+    </div>
+  {%- endfor -%}
+</div></div>

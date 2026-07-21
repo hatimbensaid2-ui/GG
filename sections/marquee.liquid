@@ -1,0 +1,30 @@
+<div class="marquee" style="background:{{ section.settings.bg }};">
+  <div class="marquee__track">
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <span class="marquee__item" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Scrolling text",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#E8A0B4" }
+  ],
+  "blocks": [
+    { "type": "item", "name": "Text", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "cute" } ] }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    { "name": "Scrolling text", "blocks": [
+      { "type": "item", "settings": { "text": "soft girl" } },
+      { "type": "item", "settings": { "text": "main character" } },
+      { "type": "item", "settings": { "text": "coquette" } },
+      { "type": "item", "settings": { "text": "new drops weekly" } }
+    ] }
+  ]
+}
+{% endschema %}

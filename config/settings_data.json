@@ -1,0 +1,47 @@
+{
+  "current": {
+    "color_background": "#FFF8F5",
+    "color_background_alt": "#FCE9EE",
+    "color_text": "#3A2A2F",
+    "color_accent": "#E8A0B4",
+    "color_accent_dark": "#C25C7A",
+    "color_button": "#3A2A2F",
+    "color_button_text": "#FFF8F5",
+    "color_sale": "#C25C7A",
+    "color_border": "#EAD3D9",
+    "font_heading": "assistant_n7",
+    "font_body": "assistant_n4",
+    "font_heading_scale": 120,
+    "heading_uppercase": false,
+    "heading_letter_spacing": 0.5,
+    "page_width": 1400,
+    "spacing_sections": 64,
+    "corner_radius": 18,
+    "button_radius": 40,
+    "card_hover_swap": true,
+    "card_show_vendor": false,
+    "card_image_ratio": "portrait",
+    "card_show_quick_add": true,
+    "cart_type": "drawer",
+    "cart_free_shipping_bar": true,
+    "cart_free_shipping_threshold": 60,
+    "social_instagram": "",
+    "social_tiktok": "",
+    "social_pinterest": "",
+    "social_youtube": "",
+    "social_facebook": ""
+  },
+  "presets": {
+    "Girlgeous": {
+      "color_background": "#FFF8F5",
+      "color_background_alt": "#FCE9EE",
+      "color_text": "#3A2A2F",
+      "color_accent": "#E8A0B4",
+      "color_accent_dark": "#C25C7A",
+      "color_button": "#3A2A2F",
+      "color_button_text": "#FFF8F5",
+      "color_sale": "#C25C7A",
+      "color_border": "#EAD3D9"
+    }
+  }
+}

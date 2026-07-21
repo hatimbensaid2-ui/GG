@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="{{ settings.color_accent }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
+    {%- liquid
+      assign body_font = settings.font_body
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign heading_font = settings.font_heading
+    -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ body_font_bold | font_face: font_display: 'swap' }}
+    {{ heading_font | font_face: font_display: 'swap' }}
+
+    {%- style -%}
+      :root {
+        --color-bg: {{ settings.color_background }};
+        --color-bg-alt: {{ settings.color_background_alt }};
+        --color-text: {{ settings.color_text }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-dark: {{ settings.color_accent_dark }};
+        --color-button: {{ settings.color_button }};
+        --color-button-text: {{ settings.color_button_text }};
+        --color-sale: {{ settings.color_sale }};
+        --color-border: {{ settings.color_border }};
+
+        --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --font-body-weight: {{ body_font.weight }};
+        --font-heading-weight: {{ heading_font.weight }};
+        --heading-scale: {{ settings.font_heading_scale | divided_by: 100.0 }};
+        --heading-spacing: {{ settings.heading_letter_spacing }}px;
+        --heading-transform: {% if settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+
+        --page-width: {{ settings.page_width }}px;
+        --section-spacing: {{ settings.spacing_sections }}px;
+        --radius: {{ settings.corner_radius }}px;
+        --button-radius: {{ settings.button_radius }}px;
+      }
+    {%- endstyle -%}
+
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+
+    {%- unless settings.font_body.system? -%}<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>{%- endunless -%}
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}">
+    <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {% render 'cart-drawer' %}
+    {%- endif -%}
+
+    <div id="SearchModal" class="search-modal" aria-hidden="true">
+      <div class="search-modal__overlay" data-search-close></div>
+      <div class="search-modal__inner">
+        <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form">
+          <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="search-modal__input" autocomplete="off">
+          <button type="submit" class="search-modal__submit" aria-label="{{ 'general.search.submit' | t }}">{% render 'icon-search' %}</button>
+        </form>
+        <button class="search-modal__close" data-search-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+      </div>
+    </div>
+
+    <script>
+      window.Girlgeous = {
+        routes: {
+          cart_add_url: '{{ routes.cart_add_url }}',
+          cart_change_url: '{{ routes.cart_change_url }}',
+          cart_url: '{{ routes.cart_url }}'
+        },
+        cartType: '{{ settings.cart_type }}',
+        freeShipThreshold: {{ settings.cart_free_shipping_threshold | default: 0 | times: 100 }},
+        moneyFormat: {{ shop.money_format | json }},
+        strings: {
+          addToCart: {{ 'products.product.add_to_cart' | t | json }},
+          soldOut: {{ 'products.product.sold_out' | t | json }},
+          added: {{ 'products.product.added' | t | json }}
+        }
+      };
+    </script>
+    {{ 'theme.js' | asset_url | script_tag }}
+  </body>
+</html>

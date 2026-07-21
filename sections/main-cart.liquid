@@ -1,0 +1,50 @@
+<div class="section">
+  <div class="page-width page-width--narrow">
+    <h1 style="text-align:center;">{{ 'sections.cart.title' | t }}</h1>
+
+    {%- if cart.item_count > 0 -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        <div style="margin-top:2rem;">
+          {%- for item in cart.items -%}
+            <div class="cart-item" style="grid-template-columns:90px 1fr auto;">
+              <a class="cart-item__img" href="{{ item.url }}">
+                {%- if item.image -%}<img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.image.alt | escape }}" width="90">{%- endif -%}
+              </a>
+              <div>
+                <a href="{{ item.url }}"><h3 class="cart-item__title">{{ item.product.title }}</h3></a>
+                {%- unless item.variant.title == 'Default Title' -%}<div class="cart-item__variant">{{ item.variant.title }}</div>{%- endunless -%}
+                {%- assign down_qty = item.quantity | minus: 1 -%}
+                {%- assign up_qty = item.quantity | plus: 1 -%}
+                <div class="cart-item__qty">
+                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ down_qty }}" aria-label="Decrease">&minus;</a>
+                  <span>{{ item.quantity }}</span>
+                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ up_qty }}" aria-label="Increase">+</a>
+                </div>
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-item__remove">{{ 'sections.cart.remove' | t }}</a>
+              </div>
+              <div class="cart-item__price">{{ item.final_line_price | money }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div style="margin-top:2rem;text-align:right;">
+          <div class="cart-drawer__subtotal" style="justify-content:flex-end;gap:2rem;font-size:1.2rem;">
+            <span>{{ 'sections.cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p class="cart-drawer__tax">{{ 'sections.cart.taxes_note' | t }}</p>
+          <button type="submit" name="checkout" class="btn" style="margin-top:1rem;">{{ 'sections.cart.checkout' | t }}</button>
+        </div>
+      </form>
+    {%- else -%}
+      <div style="text-align:center;padding:3rem 0;">
+        <p>{{ 'sections.cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--accent">{{ 'general.shop_now' | t }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

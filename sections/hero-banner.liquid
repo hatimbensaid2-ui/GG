@@ -1,0 +1,46 @@
+<div class="hero hero--{{ section.settings.height }}">
+  <div class="hero__media">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 2000 }}"
+           srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
+           sizes="100vw" alt="{{ section.settings.image.alt | escape }}" fetchpriority="high" width="2000" height="1200">
+    {%- else -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag }}
+    {%- endif -%}
+    <div class="hero__overlay" style="opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+  </div>
+  <div class="page-width hero__content hero__content--{{ section.settings.alignment }} {% if section.settings.dark_text %}hero__content--dark{% endif %}">
+    {%- if section.settings.eyebrow != blank -%}<span class="hero__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h1 class="hero__title">{{ section.settings.title }}</h1>{%- endif -%}
+    {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="hero__buttons">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank -%}
+        <a href="{{ section.settings.button2_link }}" class="btn btn--secondary" style="color:#fff;border-color:#fff;">{{ section.settings.button2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "select", "id": "height", "label": "Height", "options": [ {"value":"medium","label":"Medium"}, {"value":"full","label":"Full"} ], "default": "full" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 25 },
+    { "type": "checkbox", "id": "dark_text", "label": "Dark text (for light images)", "default": false },
+    { "type": "select", "id": "alignment", "label": "Content alignment", "options": [ {"value":"left","label":"Left"}, {"value":"center","label":"Center"}, {"value":"right","label":"Right"} ], "default": "center" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New Season" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Soft girl era starts here" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Dreamy fits, coquette details and everyday cute — curated for your main character moment." },
+    { "type": "text", "id": "button_label", "label": "Button 1 label", "default": "Shop new in" },
+    { "type": "url", "id": "button_link", "label": "Button 1 link" },
+    { "type": "text", "id": "button2_label", "label": "Button 2 label", "default": "Shop best sellers" },
+    { "type": "url", "id": "button2_link", "label": "Button 2 link" }
+  ],
+  "presets": [ { "name": "Hero banner" } ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+<div class="section"><div class="page-width page-width--narrow" style="max-width:460px;">
+  <div class="page-hero"><h1>{{ 'customer.activate_account.title' | t }}</h1></div>
+  {%- form 'activate_customer_password' -%}
+    {{ form.errors | default_errors }}
+    <div style="display:grid;gap:1rem;">
+      <input type="password" name="customer[password]" placeholder="{{ 'customer.activate_account.password' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+      <input type="password" name="customer[password_confirmation]" placeholder="{{ 'customer.activate_account.password_confirm' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+      <button type="submit" class="btn">{{ 'customer.activate_account.submit' | t }}</button>
+    </div>
+  {%- endform -%}
+</div></div>

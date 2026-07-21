@@ -1,0 +1,22 @@
+<div class="section">
+  <div class="page-width page-width--narrow">
+    <div class="page-hero"><h1>{{ page.title }}</h1></div>
+    {%- if page.content != blank -%}<div class="rte" style="text-align:center;margin-bottom:2rem;">{{ page.content }}</div>{%- endif -%}
+
+    {%- form 'contact' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="newsletter__success" style="text-align:center;">{{ 'templates.contact.success' | t }}</p>
+      {%- endif -%}
+      <div style="display:grid;gap:1rem;max-width:520px;margin-inline:auto;">
+        <input type="text" name="contact[name]" placeholder="{{ 'templates.contact.name' | t }}" style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+        <input type="email" name="contact[email]" placeholder="{{ 'templates.contact.email' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+        <textarea name="contact[body]" rows="5" placeholder="{{ 'templates.contact.message' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--radius);border:1.5px solid var(--color-border);font-family:inherit;"></textarea>
+        <button type="submit" class="btn">{{ 'templates.contact.send' | t }}</button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Contact form", "settings": [] }
+{% endschema %}

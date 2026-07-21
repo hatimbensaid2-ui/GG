@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "height": "full",
+        "alignment": "center",
+        "eyebrow": "New Season",
+        "title": "Soft girl era starts here",
+        "text": "Dreamy fits, coquette details and everyday cute — curated for your main character moment.",
+        "button_label": "Shop new in",
+        "button2_label": "Shop best sellers",
+        "overlay_opacity": 25
+      }
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "b1": { "type": "item", "settings": { "text": "soft girl" } },
+        "b2": { "type": "item", "settings": { "text": "main character" } },
+        "b3": { "type": "item", "settings": { "text": "coquette" } },
+        "b4": { "type": "item", "settings": { "text": "new drops weekly" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"]
+    },
+    "categories": {
+      "type": "collection-list",
+      "settings": { "eyebrow": "Shop by", "title": "Shop by category", "columns": 3 },
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "title": "Dresses" } },
+        "c2": { "type": "tile", "settings": { "title": "Tops" } },
+        "c3": { "type": "tile", "settings": { "title": "Sets" } }
+      },
+      "block_order": ["c1", "c2", "c3"]
+    },
+    "bestsellers": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "Trending", "title": "Best sellers", "limit": 8, "columns": 4, "button_label": "Shop all" }
+    },
+    "image_text": {
+      "type": "image-with-text",
+      "settings": {
+        "eyebrow": "Our promise",
+        "title": "Made for the soft girl in you",
+        "text": "<p>Every piece is chosen to feel like a hug — soft fabrics, flattering fits and colours that make you glow. Ethically sourced, endlessly cute.</p>",
+        "button_label": "About us"
+      }
+    },
+    "newin": {
+      "type": "featured-collection",
+      "settings": { "eyebrow": "Fresh", "title": "New in", "limit": 4, "columns": 4, "button_label": "Shop new in" }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "t1": { "type": "badge", "settings": { "icon": "truck", "title": "Free shipping", "text": "On orders over $60" } },
+        "t2": { "type": "badge", "settings": { "icon": "return", "title": "Easy returns", "text": "30-day hassle free" } },
+        "t3": { "type": "badge", "settings": { "icon": "sparkle", "title": "New every week", "text": "Fresh drops you'll love" } },
+        "t4": { "type": "badge", "settings": { "icon": "chat", "title": "Here to help", "text": "Sweet support, always" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "r1": { "type": "review", "settings": { "author": "Sofia R.", "quote": "Obsessed! The fit is so flattering and the fabric feels like a dream." } },
+        "r2": { "type": "review", "settings": { "author": "Maya L.", "quote": "Fast shipping and everything is even cuter in person. My new favourite shop." } },
+        "r3": { "type": "review", "settings": { "author": "Chloe T.", "quote": "The vibe is exactly what I wanted for my soft girl wardrobe. 10/10." } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "marquee", "categories", "bestsellers", "image_text", "newin", "trust", "testimonials", "newsletter"]
+}

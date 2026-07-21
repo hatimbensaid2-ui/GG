@@ -1,0 +1,17 @@
+{%- liquid
+  assign target = product | default: variant
+  assign compare = target.compare_at_price
+  assign price = target.price
+  if variant
+    assign compare = variant.compare_at_price
+    assign price = variant.price
+  endif
+-%}
+<div class="price {% if large %}price--large{% endif %}" data-price>
+  {%- if compare > price -%}
+    <span class="price__sale">{{ price | money }}</span>
+    <span class="price__compare">{{ compare | money }}</span>
+  {%- else -%}
+    <span>{{ price | money }}</span>
+  {%- endif -%}
+</div>

@@ -1,0 +1,47 @@
+<div class="section" style="--cols: {{ section.settings.columns }};">
+  <div class="page-width">
+    <div class="section-header">
+      {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h2 class="section-header__title">{{ section.settings.title }}</h2>{%- endif -%}
+    </div>
+    <div class="testimonials">
+      {%- for block in section.blocks -%}
+        <div class="testimonial" {{ block.shopify_attributes }}>
+          <div class="testimonial__stars">{% for i in (1..block.settings.rating) %}★{% endfor %}</div>
+          <p class="testimonial__text">“{{ block.settings.quote }}”</p>
+          <div class="testimonial__author">{{ block.settings.author }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved by you" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The girls have spoken" },
+    { "type": "range", "id": "columns", "label": "Columns", "min": 1, "max": 4, "step": 1, "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Obsessed! The fit is so flattering and the fabric feels amazing. Getting compliments every time I wear it." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Sofia R." }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    { "name": "Testimonials", "blocks": [
+      { "type": "review", "settings": { "author": "Sofia R.", "quote": "Obsessed! The fit is so flattering and the fabric feels like a dream." } },
+      { "type": "review", "settings": { "author": "Maya L.", "quote": "Fast shipping and everything is even cuter in person. My new favourite shop." } },
+      { "type": "review", "settings": { "author": "Chloe T.", "quote": "The vibe is exactly what I wanted for my soft girl wardrobe. 10/10." } }
+    ] }
+  ]
+}
+{% endschema %}

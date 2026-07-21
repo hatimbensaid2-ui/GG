@@ -1,0 +1,24 @@
+<div id="CartDrawer" class="cart-drawer" aria-label="{{ 'sections.cart.title' | t }}">
+  <div class="cart-drawer__head">
+    <h2 class="cart-drawer__title">{{ 'sections.cart.title' | t }}</h2>
+    <button class="cart-drawer__close" data-menu-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+  </div>
+
+  {%- if settings.cart_free_shipping_bar -%}
+    <div class="cart-drawer__ship-wrap"></div>
+  {%- endif -%}
+
+  <div class="cart-drawer__items"></div>
+
+  <div class="cart-drawer__foot">
+    <div class="cart-drawer__subtotal">
+      <span>{{ 'sections.cart.subtotal' | t }}</span>
+      <span class="cart-drawer__subtotal-value"></span>
+    </div>
+    <p class="cart-drawer__tax">{{ 'sections.cart.taxes_note' | t }}</p>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn--full">{{ 'sections.cart.checkout' | t }}</button>
+    </form>
+    <button type="button" class="link-underline" data-menu-close style="display:block;margin:1rem auto 0;background:none;border:0;cursor:pointer;color:inherit;">{{ 'sections.cart.continue' | t }}</button>
+  </div>
+</div>

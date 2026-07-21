@@ -1,0 +1,21 @@
+<div class="section"><div class="page-width">
+  <div class="page-hero"><h1>{{ 'customer.order.title' | t: name: order.name }}</h1></div>
+  <p>{{ 'customer.order.date' | t: date: order.created_at | date: '%b %d, %Y' }}</p>
+  <table style="width:100%;border-collapse:collapse;margin-top:1rem;">
+    <thead><tr style="text-align:left;border-bottom:1px solid var(--color-border);">
+      <th style="padding:.6rem;">{{ 'customer.order.product' | t }}</th>
+      <th style="padding:.6rem;">{{ 'customer.order.quantity' | t }}</th>
+      <th style="padding:.6rem;">{{ 'customer.order.total' | t }}</th>
+    </tr></thead>
+    <tbody>
+      {%- for line in order.line_items -%}
+        <tr style="border-bottom:1px solid var(--color-border);">
+          <td style="padding:.6rem;">{{ line.title }}</td>
+          <td style="padding:.6rem;">{{ line.quantity }}</td>
+          <td style="padding:.6rem;">{{ line.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+  </table>
+  <p style="text-align:right;margin-top:1rem;font-weight:700;">{{ 'customer.order.total' | t }}: {{ order.total_price | money }}</p>
+</div></div>

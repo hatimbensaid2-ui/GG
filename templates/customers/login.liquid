@@ -1,0 +1,12 @@
+<div class="section"><div class="page-width page-width--narrow" style="max-width:460px;">
+  <div class="page-hero"><h1>{{ 'customer.login.title' | t }}</h1></div>
+  {%- form 'customer_login' -%}
+    {{ form.errors | default_errors }}
+    <div style="display:grid;gap:1rem;">
+      <input type="email" name="customer[email]" placeholder="{{ 'customer.login.email' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+      <input type="password" name="customer[password]" placeholder="{{ 'customer.login.password' | t }}" required style="padding:.9rem 1.2rem;border-radius:var(--button-radius);border:1.5px solid var(--color-border);font-family:inherit;">
+      <button type="submit" class="btn">{{ 'customer.login.sign_in' | t }}</button>
+    </div>
+  {%- endform -%}
+  <p style="text-align:center;margin-top:1.5rem;"><a href="{{ routes.account_register_url }}" class="link-underline">{{ 'customer.login.create_account' | t }}</a></p>
+</div></div>

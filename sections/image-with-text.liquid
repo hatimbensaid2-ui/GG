@@ -1,0 +1,37 @@
+<div class="section">
+  <div class="page-width">
+    <div class="image-text {% if section.settings.reverse %}image-text--reverse{% endif %}">
+      <div class="image-text__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" width="900" height="1000">
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="image-text__content">
+        {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.title != blank -%}<h2>{{ section.settings.title }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link }}" class="btn">{{ section.settings.button_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "reverse", "label": "Reverse layout", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our promise" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Made for the soft girl in you" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Every piece is chosen to feel like a hug — soft fabrics, flattering fits and colours that make you glow. Ethically sourced, endlessly cute.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "About us" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [ { "name": "Image with text" } ]
+}
+{% endschema %}

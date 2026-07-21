@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "desc": { "type": "description" },
+        "ship": { "type": "accordion", "settings": { "title": "Shipping & returns", "content": "<p>Free shipping on orders over $60. Easy 30-day returns on everything.</p>" } },
+        "care": { "type": "accordion", "settings": { "title": "Size & care", "content": "<p>Runs true to size. Machine wash cold, hang to dry to keep it soft.</p>" } }
+      },
+      "block_order": ["desc", "ship", "care"]
+    }
+  },
+  "order": ["main"]
+}

@@ -1,0 +1,153 @@
+{
+  "general": {
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for cute stuff...",
+      "submit": "Search",
+      "results_count": "{{ count }} results for \"{{ terms }}\"",
+      "no_results": "No results for \"{{ terms }}\". Try another search.",
+      "results_with_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      }
+    },
+    "newsletter": {
+      "placeholder": "Enter your email",
+      "button": "Sign me up",
+      "success": "Welcome to the club! Check your inbox 🎀"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "footer": {
+      "rights": "All rights reserved"
+    },
+    "shop_all": "Shop all",
+    "shop_now": "Shop now",
+    "404": {
+      "title": "Oops! This page wandered off.",
+      "link": "Back to home"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "close": "Close",
+    "menu": "Menu",
+    "expand": "Expand"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to bag",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "added": "Added! 🎀",
+      "sale": "Sale",
+      "new": "New",
+      "wishlist": "Add to wishlist",
+      "quick_add": "Quick add",
+      "choose_options": "Choose options",
+      "details": "Details",
+      "related": "You may also love"
+    }
+  },
+  "sections": {
+    "cart": {
+      "title": "Your bag",
+      "subtotal": "Subtotal",
+      "taxes_note": "Taxes and shipping calculated at checkout",
+      "checkout": "Checkout",
+      "continue": "Continue shopping",
+      "remove": "Remove",
+      "empty": "Your bag is empty."
+    }
+  },
+  "collections": {
+    "general": {
+      "count": "{{ count }} products",
+      "no_matches": "No products match your filters."
+    },
+    "sorting": {
+      "title": "Sort by"
+    },
+    "list": {
+      "title": "Collections",
+      "items": "items"
+    }
+  },
+  "blogs": {
+    "article": {
+      "comments": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    }
+  },
+  "templates": {
+    "contact": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send message",
+      "success": "Thanks! We'll be in touch soon 💌"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "My account",
+      "details": "Account details",
+      "view_addresses": "View addresses",
+      "log_out": "Log out",
+      "return": "Return to account"
+    },
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "sign_in": "Sign in",
+      "create_account": "Create an account"
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account"
+    },
+    "orders": {
+      "title": "Order history",
+      "order_number": "Order",
+      "date": "Date",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date": "Placed on {{ date }}",
+      "product": "Product",
+      "quantity": "Qty",
+      "total": "Total"
+    },
+    "addresses": {
+      "title": "Your addresses"
+    },
+    "reset_password": {
+      "title": "Reset password",
+      "password": "New password",
+      "password_confirm": "Confirm password",
+      "submit": "Reset password"
+    },
+    "activate_account": {
+      "title": "Activate account",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account"
+    }
+  }
+}

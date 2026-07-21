@@ -1,0 +1,83 @@
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="collection-hero page-width">
+  <h1>{{ collection.title }}</h1>
+  {%- if collection.description != blank -%}
+    <div class="collection-hero__desc rte">{{ collection.description }}</div>
+  {%- endif -%}
+</div>
+
+<div class="section" style="padding-top:0;">
+  <div class="page-width">
+    <div class="collection-toolbar">
+      <span class="collection-toolbar__count">{{ 'collections.general.count' | t: count: collection.products_count }}</span>
+      {%- if section.settings.show_sort -%}
+        <form>
+          <select name="sort_by" onchange="this.form.submit()" aria-label="{{ 'collections.sorting.title' | t }}">
+            {%- assign current = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == current %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+    </div>
+
+    <div class="collection-layout">
+      {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+        <aside class="facets">
+          <form>
+            {%- for filter in collection.filters -%}
+              <div class="facets__group">
+                <div class="facets__group-title">{{ filter.label }}</div>
+                <ul class="facets__list">
+                  {%- case filter.type -%}
+                    {%- when 'list', 'boolean' -%}
+                      {%- for value in filter.values -%}
+                        <li><label>
+                          <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %} onchange="this.form.submit()">
+                          {{ value.label }} ({{ value.count }})
+                        </label></li>
+                      {%- endfor -%}
+                    {%- when 'price_range' -%}
+                      <li>
+                        <label>Min <input type="number" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value }}" placeholder="0"></label>
+                        <label>Max <input type="number" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value }}" placeholder="{{ filter.range_max | money_without_currency }}"></label>
+                        <button type="submit" class="link-underline" style="background:none;border:0;cursor:pointer;margin-top:.5rem;">Apply</button>
+                      </li>
+                  {%- endcase -%}
+                </ul>
+              </div>
+            {%- endfor -%}
+            {%- if collection.sort_by != blank -%}<input type="hidden" name="sort_by" value="{{ collection.sort_by }}">{%- endif -%}
+          </form>
+        </aside>
+      {%- endif -%}
+
+      <div>
+        {%- if collection.products.size > 0 -%}
+          <div class="product-grid" style="--cols:{{ section.settings.columns }};">
+            {%- for product in collection.products -%}
+              {% render 'product-card', product: product %}
+            {%- endfor -%}
+          </div>
+          {% render 'pagination', paginate: paginate %}
+        {%- else -%}
+          <p style="text-align:center;padding:4rem 0;">{{ 'collections.general.no_matches' | t }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "checkbox", "id": "show_sort", "label": "Show sorting", "default": true },
+    { "type": "checkbox", "id": "show_filters", "label": "Show filters", "default": true }
+  ]
+}
+{% endschema %}

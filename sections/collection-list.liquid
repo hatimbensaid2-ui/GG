@@ -1,0 +1,54 @@
+<div class="section" style="--cols: {{ section.settings.columns }};">
+  <div class="page-width">
+    {%- if section.settings.title != blank -%}
+      <div class="section-header">
+        {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-header__title">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+    <div class="collection-tiles">
+      {%- for block in section.blocks -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+        <a href="{{ collection.url | default: '#' }}" class="collection-tile" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="700" height="933">
+          {%- elsif collection.featured_image != blank -%}
+            <img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" loading="lazy" width="700" height="933">
+          {%- else -%}
+            {{ 'collection-1' | placeholder_svg_tag }}
+          {%- endif -%}
+          <div class="collection-tile__overlay">
+            <div>
+              <h3 class="collection-tile__title">{{ block.settings.title | default: collection.title }}</h3>
+              <span class="collection-tile__cta">{{ 'general.shop_now' | t }}</span>
+            </div>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop by" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by category" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Override image" },
+        { "type": "text", "id": "title", "label": "Override title" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [ { "name": "Collection list", "blocks": [ {"type":"tile"}, {"type":"tile"}, {"type":"tile"} ] } ]
+}
+{% endschema %}

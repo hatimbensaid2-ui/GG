@@ -1,0 +1,81 @@
+{%- comment -%}
+  Renders a product card.
+  Accepts: product (required)
+{%- endcomment -%}
+{%- liquid
+  assign ratio_class = ''
+  if settings.card_image_ratio == 'square'
+    assign ratio_class = 'product-card__media--square'
+  endif
+  assign second = product.media[1]
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+<div class="product-card">
+  <a href="{{ product.url }}" class="product-card__media {{ ratio_class }}" aria-label="{{ product.title | escape }}">
+    <div class="product-card__badges">
+      {%- unless product.available -%}
+        <span class="badge badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- else -%}
+        {%- if on_sale -%}
+          <span class="badge badge--sale">{{ 'products.product.sale' | t }}</span>
+        {%- endif -%}
+        {%- if product.tags contains 'new' -%}
+          <span class="badge">{{ 'products.product.new' | t }}</span>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+    {%- if product.featured_media -%}
+      <img class="product-card__img--one"
+           src="{{ product.featured_media | image_url: width: 600 }}"
+           srcset="{{ product.featured_media | image_url: width: 300 }} 300w, {{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 900 }} 900w"
+           sizes="(max-width: 749px) 50vw, 25vw"
+           alt="{{ product.featured_media.alt | escape }}" loading="lazy" width="600" height="800">
+      {%- if settings.card_hover_swap and second -%}
+        <img class="product-card__img--two"
+             src="{{ second | image_url: width: 600 }}"
+             srcset="{{ second | image_url: width: 300 }} 300w, {{ second | image_url: width: 600 }} 600w"
+             sizes="(max-width: 749px) 50vw, 25vw"
+             alt="" loading="lazy" width="600" height="800">
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-card__img--one' }}
+    {%- endif -%}
+  </a>
+
+  <button type="button" class="product-card__wish" aria-label="{{ 'products.product.wishlist' | t }}">
+    {% render 'icon-heart' %}
+  </button>
+
+  {%- if settings.card_show_quick_add and product.available -%}
+    <div class="product-card__quick">
+      {%- if product.variants.size == 1 -%}
+        <button type="button" class="quick-add-btn" data-quick-add="{{ product.selected_or_first_available_variant.id }}">
+          {{ 'products.product.quick_add' | t }}
+        </button>
+      {%- else -%}
+        <a href="{{ product.url }}" class="quick-add-btn" style="display:block;text-align:center;">
+          {{ 'products.product.choose_options' | t }}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <div class="product-card__info">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}
+      <div class="product-card__vendor">{{ product.vendor }}</div>
+    {%- endif -%}
+    <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {% render 'price', product: product %}
+    {%- assign color_opt = product.options_with_values | where: 'name', 'Color' | first -%}
+    {%- unless color_opt == blank -%}
+      <div class="product-card__swatches">
+        {%- for value in color_opt.values limit: 5 -%}
+          <span class="swatch" style="background:{{ value | downcase | split: ' ' | last }};" title="{{ value }}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endunless -%}
+  </div>
+</div>

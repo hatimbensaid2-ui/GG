@@ -1,0 +1,107 @@
+<header class="header" role="banner">
+  <div class="page-width header__inner">
+    <div class="header__nav">
+      <button class="header__menu-toggle" data-menu-open aria-label="{{ 'accessibility.menu' | t }}">{% render 'icon-menu' %}</button>
+      <ul class="nav-menu">
+        {%- for link in section.settings.menu.links -%}
+          {%- assign is_sale = false -%}
+          {%- if link.title contains 'Sale' or link.title contains 'SALE' -%}{% assign is_sale = true %}{%- endif -%}
+          <li class="nav-menu__item {% if link.links.size > 0 %}nav-menu__item--has-mega{% endif %} {% if is_sale %}nav-menu__item--sale{% endif %}">
+            <a href="{{ link.url }}" class="nav-menu__link">{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              <div class="mega">
+                <div class="page-width mega__inner">
+                  {%- for child in link.links -%}
+                    <div class="mega__col">
+                      <div class="mega__heading">{{ child.title }}</div>
+                      <ul class="mega__list">
+                        {%- if child.links.size > 0 -%}
+                          {%- for grandchild in child.links -%}
+                            <li><a href="{{ grandchild.url }}">{{ grandchild.title }}</a></li>
+                          {%- endfor -%}
+                        {%- else -%}
+                          <li><a href="{{ child.url }}">{{ 'general.shop_all' | t }}</a></li>
+                        {%- endif -%}
+                      </ul>
+                    </div>
+                  {%- endfor -%}
+                  {%- if section.settings.mega_image != blank -%}
+                    <a href="{{ section.settings.mega_image_link }}" class="mega__promo">
+                      <img src="{{ section.settings.mega_image | image_url: width: 560 }}" alt="" loading="lazy" width="280" height="350">
+                      {%- if section.settings.mega_image_caption != blank -%}
+                        <div class="mega__promo-caption">{{ section.settings.mega_image_caption }}</div>
+                      {%- endif -%}
+                    </a>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    <div class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}"><img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="150"></a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}"><p class="header__logo-text">{{ shop.name }}</p></a>
+      {%- endif -%}
+    </div>
+
+    <div class="header__actions">
+      <button class="header__action" data-search-open aria-label="{{ 'general.search.title' | t }}">{% render 'icon-search' %}</button>
+      <a class="header__action" href="{{ routes.account_url }}" aria-label="{{ 'customer.account.title' | t }}">{% render 'icon-account' %}</a>
+      <button class="header__action" data-cart-open aria-label="{{ 'sections.cart.title' | t }}">
+        {% render 'icon-cart' %}
+        <span class="cart-count" {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{%- comment -%} Mobile navigation {%- endcomment -%}
+<nav id="MobileNav" class="mobile-nav" aria-label="{{ 'accessibility.menu' | t }}">
+  <div class="mobile-nav__head">
+    <p class="header__logo-text" style="font-size:1.4rem;margin:0;">{{ shop.name }}</p>
+    <button data-menu-close aria-label="{{ 'accessibility.close' | t }}" style="background:none;border:0;cursor:pointer;color:inherit;">{% render 'icon-close' %}</button>
+  </div>
+  <ul class="mobile-nav__list">
+    {%- for link in section.settings.menu.links -%}
+      <li class="mobile-nav__item">
+        {%- if link.links.size > 0 -%}
+          <button class="mobile-nav__toggle-sub" aria-label="{{ 'accessibility.expand' | t }}">{% render 'icon-plus' %}</button>
+        {%- endif -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- if link.links.size > 0 -%}
+          <ul class="mobile-nav__sub">
+            {%- for child in link.links -%}
+              <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+              {%- for grandchild in child.links -%}
+                <li><a href="{{ grandchild.url }}" style="opacity:.75;font-size:.95rem;">{{ grandchild.title }}</a></li>
+              {%- endfor -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+  <div class="mobile-nav__foot">
+    <a href="{{ routes.account_url }}" class="link-underline">{{ 'customer.account.title' | t }}</a>
+    <a href="{{ routes.search_url }}" class="link-underline">{{ 'general.search.title' | t }}</a>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "header", "content": "Mega menu promo" },
+    { "type": "image_picker", "id": "mega_image", "label": "Promo image" },
+    { "type": "url", "id": "mega_image_link", "label": "Promo link" },
+    { "type": "text", "id": "mega_image_caption", "label": "Promo caption" }
+  ]
+}
+{% endschema %}
