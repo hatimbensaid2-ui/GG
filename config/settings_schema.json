@@ -219,7 +219,7 @@
         "type": "number",
         "id": "cart_free_shipping_threshold",
         "label": "Free shipping threshold (in your currency, whole number)",
-        "default": 60
+        "default": 90
       }
     ]
   },
