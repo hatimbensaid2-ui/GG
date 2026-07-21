@@ -44,9 +44,11 @@
 
     <div class="footer__bottom">
       <div>© {{ 'now' | date: '%Y' }} {{ shop.name }} — {{ 'general.footer.rights' | t }}</div>
-      {%- if section.settings.show_payment -%}
+      {%- if section.settings.show_payment and shop.enabled_payment_types.size > 0 -%}
         <div class="footer__payment">
-          <span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>PAYPAL</span><span>KLARNA</span><span>APPLE PAY</span>
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+          {%- endfor -%}
         </div>
       {%- endif -%}
     </div>

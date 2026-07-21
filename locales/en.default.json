@@ -64,7 +64,9 @@
       "checkout": "Checkout",
       "continue": "Continue shopping",
       "remove": "Remove",
-      "empty": "Your bag is empty."
+      "empty": "Your bag is empty.",
+      "you_saved": "You saved",
+      "discount": "Discount"
     }
   },
   "collections": {

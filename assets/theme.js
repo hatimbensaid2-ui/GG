@@ -120,13 +120,34 @@
     itemsEl.innerHTML = cart.items.map(function (item, i) {
       var img = item.image ? '<img src="' + item.image.replace(/(\.[^.]*)$/, '_160x$1') + '" alt="" loading="lazy">' : '';
       var variant = item.variant_title && item.variant_title !== 'Default Title' ? '<div class="cart-item__variant">' + item.variant_title + '</div>' : '';
+      // line-level automatic discounts
+      var lineDiscounts = '';
+      (item.line_level_discount_allocations || []).forEach(function (d) {
+        lineDiscounts += '<div class="cart-item__discount">' + (d.discount_application ? d.discount_application.title : d.title) + ' (&minus;' + formatMoney(d.amount) + ')</div>';
+      });
+      var priceHtml = item.original_line_price > item.final_line_price
+        ? '<span class="cart-item__price-was">' + formatMoney(item.original_line_price) + '</span><span class="cart-item__price-now">' + formatMoney(item.final_line_price) + '</span>'
+        : formatMoney(item.final_line_price);
       return '<div class="cart-item" data-line="' + (i + 1) + '">' +
         '<a class="cart-item__img" href="' + item.url + '">' + img + '</a>' +
-        '<div><a href="' + item.url + '"><h4 class="cart-item__title">' + item.product_title + '</h4></a>' + variant +
+        '<div><a href="' + item.url + '"><h4 class="cart-item__title">' + item.product_title + '</h4></a>' + variant + lineDiscounts +
         '<div class="cart-item__qty"><button data-qty-down aria-label="Decrease">&minus;</button><span>' + item.quantity + '</span><button data-qty-up aria-label="Increase">+</button></div>' +
         '<button class="cart-item__remove" data-remove>Remove</button></div>' +
-        '<div class="cart-item__price">' + formatMoney(item.final_line_price) + '</div></div>';
+        '<div class="cart-item__price">' + priceHtml + '</div></div>';
     }).join('');
+
+    // cart-level automatic discounts + total savings
+    var discEl = $('.cart-drawer__discounts', drawer);
+    if (discEl) {
+      var rows = '';
+      (cart.cart_level_discount_applications || []).forEach(function (d) {
+        rows += '<div class="cart-drawer__discount-row"><span>' + d.title + '</span><span>&minus;' + formatMoney(d.total_allocated_amount) + '</span></div>';
+      });
+      if (cart.total_discount > 0) {
+        rows += '<div class="cart-drawer__discount-row cart-drawer__discount-row--total"><span>' + (CFG.strings.youSaved || 'You saved') + '</span><span>&minus;' + formatMoney(cart.total_discount) + '</span></div>';
+      }
+      discEl.innerHTML = rows;
+    }
 
     var sub = $('.cart-drawer__subtotal-value', drawer);
     if (sub) sub.textContent = formatMoney(cart.total_price);
