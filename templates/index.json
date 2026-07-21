@@ -38,19 +38,19 @@
         "b2": {
           "type": "item",
           "settings": {
-            "text": "main character"
+            "text": "Main character"
           }
         },
         "b3": {
           "type": "item",
           "settings": {
-            "text": "coquette"
+            "text": "Coquette"
           }
         },
         "b4": {
           "type": "item",
           "settings": {
-            "text": "new drops weekly"
+            "text": "New drops weekly"
           }
         }
       },
@@ -61,7 +61,7 @@
         "b4"
       ],
       "settings": {
-        "bg": "#e8a0b4"
+        "bg": "#F2BECD"
       }
     },
     "categories": {
