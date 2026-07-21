@@ -70,14 +70,14 @@
           "type": "tile",
           "settings": {
             "collection": "boots",
-            "title": "Dresses"
+            "title": "Boots"
           }
         },
         "c2": {
           "type": "tile",
           "settings": {
-            "collection": "dresses",
-            "title": "Tops"
+            "collection": "best-sellers",
+            "title": "Best Seller"
           }
         },
         "c3": {
