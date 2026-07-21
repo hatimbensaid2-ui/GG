@@ -128,8 +128,8 @@
         "eyebrow": "Fresh",
         "title": "New in",
         "text": "",
-        "collection": "",
-        "limit": 4,
+        "collection": "new-in",
+        "limit": 12,
         "columns": 4,
         "button_label": "Shop new in"
       }
