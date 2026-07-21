@@ -1,19 +1,29 @@
 <div class="section" data-product-root>
   <div class="page-width">
     <div class="product">
-      {%- comment -%} Gallery {%- endcomment -%}
+      {%- comment -%} Gallery — swipeable / draggable slider {%- endcomment -%}
       <div class="product__gallery">
-        <div class="product__gallery-main">
-          {%- if product.featured_media -%}
-            <img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.featured_media.alt | escape }}" width="1000" height="1333" fetchpriority="high">
-          {%- else -%}
-            {{ 'product-1' | placeholder_svg_tag }}
+        <div class="product__slider-wrap">
+          <div class="product__slider" data-gallery>
+            {%- if product.media.size > 0 -%}
+              {%- for media in product.media -%}
+                <div class="product__slide" data-slide="{{ forloop.index0 }}">
+                  <img src="{{ media | image_url: width: 1000 }}" alt="{{ media.alt | escape }}" width="1000" height="1333" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" {% if forloop.first %}fetchpriority="high"{% endif %} draggable="false">
+                </div>
+              {%- endfor -%}
+            {%- else -%}
+              <div class="product__slide">{{ 'product-1' | placeholder_svg_tag }}</div>
+            {%- endif -%}
+          </div>
+          {%- if product.media.size > 1 -%}
+            <button type="button" class="product__nav product__nav--prev" data-gallery-prev aria-label="Previous image">{% render 'icon-chevron' %}</button>
+            <button type="button" class="product__nav product__nav--next" data-gallery-next aria-label="Next image">{% render 'icon-chevron' %}</button>
           {%- endif -%}
         </div>
         {%- if product.media.size > 1 -%}
           <div class="product__thumbs">
             {%- for media in product.media limit: 10 -%}
-              <button type="button" class="product__thumb {% if forloop.first %}is-active{% endif %}" data-full="{{ media | image_url: width: 1000 }}" aria-label="View image {{ forloop.index }}">
+              <button type="button" class="product__thumb {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" aria-label="View image {{ forloop.index }}">
                 <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="200" height="267">
               </button>
             {%- endfor -%}
@@ -72,8 +82,8 @@
 
         {%- if section.settings.show_meta -%}
           <div class="product__meta">
-            {% render 'icon-truck' %} <span>{{ section.settings.meta_shipping }}</span>
-            {% render 'icon-return' %} <span>{{ section.settings.meta_returns }}</span>
+            <span>{% render 'icon-truck' %} {{ section.settings.meta_shipping }}</span>
+            <span>{% render 'icon-return' %} {{ section.settings.meta_returns }}</span>
           </div>
         {%- endif -%}
 

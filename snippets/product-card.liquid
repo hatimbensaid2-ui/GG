@@ -14,6 +14,7 @@
   endif
 -%}
 <div class="product-card">
+  <div class="product-card__media-wrap">
   <a href="{{ product.url }}" class="product-card__media {{ ratio_class }}" aria-label="{{ product.title | escape }}">
     <div class="product-card__badges">
       {%- unless product.available -%}
@@ -45,10 +46,6 @@
     {%- endif -%}
   </a>
 
-  <button type="button" class="product-card__wish" aria-label="{{ 'products.product.wishlist' | t }}">
-    {% render 'icon-heart' %}
-  </button>
-
   {%- if settings.card_show_quick_add and product.available -%}
     <div class="product-card__quick">
       {%- if product.variants.size == 1 -%}
@@ -62,6 +59,7 @@
       {%- endif -%}
     </div>
   {%- endif -%}
+  </div>
 
   <div class="product-card__info">
     {%- if settings.card_show_vendor and product.vendor != blank -%}

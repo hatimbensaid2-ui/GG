@@ -208,6 +208,84 @@
   /* ============================================================
      Product page: variants, gallery, qty, accordions
      ============================================================ */
+  /* ---------- product gallery: swipe + mouse drag ---------- */
+  function initGallery(root, product) {
+    var slider = $('[data-gallery]', root);
+    if (!slider) return null;
+    var slides = $$('.product__slide', slider);
+    var thumbs = $$('.product__thumb', root);
+    if (!slides.length) return null;
+
+    function slideWidth() { return slider.clientWidth; }
+
+    function currentIndex() {
+      return Math.round(slider.scrollLeft / slideWidth());
+    }
+
+    function setActive(i) {
+      thumbs.forEach(function (t, idx) { t.classList.toggle('is-active', idx === i); });
+    }
+
+    function goTo(i, smooth) {
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      slider.scrollTo({ left: i * slideWidth(), behavior: smooth === false ? 'auto' : 'smooth' });
+      setActive(i);
+    }
+
+    // thumbnails jump
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        goTo(parseInt(thumb.getAttribute('data-index'), 10));
+      });
+    });
+
+    // arrows
+    var prev = $('[data-gallery-prev]', root);
+    var next = $('[data-gallery-next]', root);
+    if (prev) prev.addEventListener('click', function () { goTo(currentIndex() - 1); });
+    if (next) next.addEventListener('click', function () { goTo(currentIndex() + 1); });
+
+    // keep active thumb in sync while scrolling / swiping
+    var scrollTimer;
+    slider.addEventListener('scroll', function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () { setActive(currentIndex()); }, 60);
+    });
+
+    // mouse drag to scroll
+    var down = false, startX = 0, startScroll = 0, moved = false;
+    slider.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return; // native touch scroll handles it
+      down = true; moved = false;
+      startX = e.clientX; startScroll = slider.scrollLeft;
+      slider.classList.add('is-dragging');
+      slider.setPointerCapture(e.pointerId);
+    });
+    slider.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      slider.scrollLeft = startScroll - dx;
+    });
+    function endDrag(e) {
+      if (!down) return;
+      down = false;
+      slider.classList.remove('is-dragging');
+      if (moved) goTo(currentIndex()); // snap to nearest
+    }
+    slider.addEventListener('pointerup', endDrag);
+    slider.addEventListener('pointercancel', endDrag);
+    slider.addEventListener('pointerleave', endDrag);
+    // prevent click navigation right after a drag
+    slider.addEventListener('click', function (e) { if (moved) { e.preventDefault(); } }, true);
+
+    // recalc on resize
+    window.addEventListener('resize', function () { setActive(currentIndex()); });
+
+    setActive(0);
+    return { goTo: goTo, currentIndex: currentIndex };
+  }
+
   function initProduct(root) {
     var dataEl = $('[data-product-json]', root);
     if (!dataEl) return;
@@ -217,6 +295,7 @@
     var idInput = form ? form.querySelector('[name="id"]') : null;
     var priceEl = $('[data-price]', root);
     var addBtn = $('[data-add-btn]', root);
+    var gallery = initGallery(root, product);
 
     // default from first available variant
     var first = product.variants.find(function (v) { return v.available; }) || product.variants[0];
@@ -245,9 +324,8 @@
           addBtn.disabled = !v.available;
           addBtn.textContent = v.available ? (CFG.strings.addToCart || 'Add to bag') : (CFG.strings.soldOut || 'Sold out');
         }
-        if (v.featured_image) {
-          var main = $('.product__gallery-main img', root);
-          if (main) main.src = v.featured_image.src;
+        if (v.featured_media && gallery) {
+          gallery.goTo(v.featured_media.position - 1);
         }
       } else if (addBtn) {
         addBtn.disabled = true;
@@ -260,17 +338,6 @@
         var idx = parseInt(pill.getAttribute('data-option-index'), 10);
         selected[idx] = pill.getAttribute('data-value');
         update();
-      });
-    });
-
-    // gallery thumbnails
-    $$('.product__thumb', root).forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        var src = thumb.getAttribute('data-full');
-        var main = $('.product__gallery-main img', root);
-        if (main && src) main.src = src;
-        $$('.product__thumb', root).forEach(function (t) { t.classList.remove('is-active'); });
-        thumb.classList.add('is-active');
       });
     });
 

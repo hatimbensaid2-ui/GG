@@ -29,11 +29,11 @@
       assign body_font_bold = body_font | font_modify: 'weight', 'bold'
       assign heading_font = settings.font_heading
     -%}
-    {{ body_font | font_face: font_display: 'swap' }}
-    {{ body_font_bold | font_face: font_display: 'swap' }}
-    {{ heading_font | font_face: font_display: 'swap' }}
-
     {%- style -%}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+      {{ heading_font | font_face: font_display: 'swap' }}
+
       :root {
         --color-bg: {{ settings.color_background }};
         --color-bg-alt: {{ settings.color_background_alt }};

@@ -1,7 +1,16 @@
 <header class="header" role="banner">
   <div class="page-width header__inner">
-    <div class="header__nav">
-      <button class="header__menu-toggle" data-menu-open aria-label="{{ 'accessibility.menu' | t }}">{% render 'icon-menu' %}</button>
+    <button class="header__menu-toggle" data-menu-open aria-label="{{ 'accessibility.menu' | t }}">{% render 'icon-menu' %}</button>
+
+    <div class="header__logo">
+      {%- if section.settings.logo != blank -%}
+        <a href="{{ routes.root_url }}"><img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="150"></a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}"><p class="header__logo-text">{{ shop.name }}</p></a>
+      {%- endif -%}
+    </div>
+
+    <nav class="header__nav" aria-label="{{ 'accessibility.menu' | t }}">
       <ul class="nav-menu">
         {%- for link in section.settings.menu.links -%}
           {%- assign is_sale = false -%}
@@ -39,15 +48,7 @@
           </li>
         {%- endfor -%}
       </ul>
-    </div>
-
-    <div class="header__logo">
-      {%- if section.settings.logo != blank -%}
-        <a href="{{ routes.root_url }}"><img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name }}" width="150"></a>
-      {%- else -%}
-        <a href="{{ routes.root_url }}"><p class="header__logo-text">{{ shop.name }}</p></a>
-      {%- endif -%}
-    </div>
+    </nav>
 
     <div class="header__actions">
       <button class="header__action" data-search-open aria-label="{{ 'general.search.title' | t }}">{% render 'icon-search' %}</button>
