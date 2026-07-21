@@ -51,9 +51,9 @@
     </nav>
 
     <div class="header__actions">
-      <button class="header__action" data-search-open aria-label="{{ 'general.search.title' | t }}">{% render 'icon-search' %}</button>
-      <a class="header__action" href="{{ routes.account_url }}" aria-label="{{ 'customer.account.title' | t }}">{% render 'icon-account' %}</a>
-      <button class="header__action" data-cart-open aria-label="{{ 'sections.cart.title' | t }}">
+      <button class="header__action header__action--search" data-search-open aria-label="{{ 'general.search.title' | t }}">{% render 'icon-search' %}</button>
+      <a class="header__action header__action--account" href="{{ routes.account_url }}" aria-label="{{ 'customer.account.title' | t }}">{% render 'icon-account' %}</a>
+      <button class="header__action header__action--cart" data-cart-open aria-label="{{ 'sections.cart.title' | t }}">
         {% render 'icon-cart' %}
         <span class="cart-count" {% if cart.item_count == 0 %}style="display:none"{% endif %}>{{ cart.item_count }}</span>
       </button>
