@@ -24,7 +24,7 @@
         "m2": {
           "type": "message",
           "settings": {
-            "text": "New drops every week — join the club 🎀",
+            "text": "New drops every week join the club 🎀",
             "link": ""
           }
         },
@@ -43,7 +43,7 @@
       ],
       "settings": {
         "scrolling": true,
-        "bg": "#c25c7a",
+        "bg": "#F2BECD",
         "text_color": "#ffffff"
       }
     },
