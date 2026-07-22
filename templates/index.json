@@ -21,9 +21,9 @@
         "title": "Soft girl era starts here",
         "text": "",
         "button_label": "Shop new in",
-        "button_link": "",
+        "button_link": "shopify://collections/new-in",
         "button2_label": "Shop best sellers",
-        "button2_link": ""
+        "button2_link": "shopify://collections/best-sellers"
       }
     },
     "marquee": {
