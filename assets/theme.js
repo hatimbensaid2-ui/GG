@@ -67,22 +67,38 @@
     if (sub) { sub.closest('.mobile-nav__item').classList.toggle('is-open'); }
   });
 
-  /* ---------- size guide modal ---------- */
+  /* ---------- size guide link opens the size chart accordion ---------- */
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-size-guide-open]')) {
-      var m = $('[data-size-guide]');
-      if (m) { m.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
-    }
-    if (e.target.closest('[data-size-guide-close]')) {
-      var m2 = $('[data-size-guide]');
-      if (m2) { m2.classList.remove('is-open'); document.body.style.overflow = ''; }
+      e.preventDefault();
+      var acc = document.getElementById('size-guide-anchor');
+      if (acc) {
+        acc.classList.add('is-open');
+        acc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-      var m = $('[data-size-guide].is-open');
-      if (m) { m.classList.remove('is-open'); document.body.style.overflow = ''; }
-    }
+
+  /* ---------- bundle add-to-cart (reads chosen variant) ---------- */
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-bundle-add]');
+    if (!btn) return;
+    e.preventDefault();
+    var item = btn.closest('.pdp-bundle__item');
+    var sel = item ? item.querySelector('.pdp-bundle__variant') : null;
+    var id = sel ? sel.value : btn.getAttribute('data-default-id');
+    if (!id) return;
+    btn.disabled = true;
+    fetch(CFG.routes.cart_add_url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: id, quantity: 1 })
+    }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (res) {
+        btn.disabled = false;
+        if (!res.ok) { toast(res.data.description || 'Could not add to bag'); return; }
+        refreshCart(true);
+      }).catch(function () { btn.disabled = false; toast('Something went wrong'); });
   });
 
   /* ---------- size chart cm/inch toggle ---------- */

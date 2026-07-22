@@ -101,10 +101,29 @@
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'accordion' -%}
-                <div class="accordion" {{ block.shopify_attributes }}>
-                  <button type="button" class="accordion__head">{{ block.settings.title }} {% render 'icon-plus' %}</button>
-                  <div class="accordion__body"><div class="accordion__inner rte">{{ block.settings.content }}</div></div>
-                </div>
+                {%- assign btitle = block.settings.title | downcase -%}
+                {%- if btitle contains 'size' and product.metafields.custom.size_chart != blank -%}
+                  {%- comment -%} Size & care block becomes the size chart when the product has one {%- endcomment -%}
+                  <div class="accordion" id="size-guide-anchor" {{ block.shopify_attributes }}>
+                    <button type="button" class="accordion__head">{{ 'products.size_guide.title' | t }} {% render 'icon-plus' %}</button>
+                    <div class="accordion__body accordion__body--tall">
+                      <div class="accordion__inner">
+                        <div class="size-guide__table rte">{{ product.metafields.custom.size_chart.value }}</div>
+                        {%- if section.settings.size_guide_image != blank -%}
+                          <div class="size-guide__image" style="margin-top:1rem;">
+                            <img src="{{ section.settings.size_guide_image | image_url: width: 1100 }}" alt="{{ 'products.size_guide.title' | t }}" loading="lazy">
+                          </div>
+                        {%- endif -%}
+                        <p class="size-guide__note">{{ 'products.size_guide.note' | t }}</p>
+                      </div>
+                    </div>
+                  </div>
+                {%- else -%}
+                  <div class="accordion" {{ block.shopify_attributes }}>
+                    <button type="button" class="accordion__head">{{ block.settings.title }} {% render 'icon-plus' %}</button>
+                    <div class="accordion__body"><div class="accordion__inner rte">{{ block.settings.content }}</div></div>
+                  </div>
+                {%- endif -%}
               {%- when 'description' -%}
                 <div class="accordion is-open" {{ block.shopify_attributes }}>
                   <button type="button" class="accordion__head">{{ 'products.product.details' | t }} {% render 'icon-plus' %}</button>
@@ -130,9 +149,16 @@
               <div class="pdp-bundle__info">
                 <a href="{{ p.url }}" class="pdp-bundle__name">{{ p.title }}</a>
                 {% render 'price', product: p %}
+                {%- if p.available and p.has_only_default_variant == false -%}
+                  <select class="pdp-bundle__variant" aria-label="{{ p.title | escape }}">
+                    {%- for v in p.variants -%}
+                      <option value="{{ v.id }}" {% if v.id == p.selected_or_first_available_variant.id %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>{{ v.title }}{% unless v.available %} — {{ 'products.product.sold_out' | t }}{% endunless %}</option>
+                    {%- endfor -%}
+                  </select>
+                {%- endif -%}
               </div>
               {%- if p.available -%}
-                <button type="button" class="pdp-bundle__add" data-quick-add="{{ p.selected_or_first_available_variant.id }}" aria-label="{{ 'products.product.add_to_cart' | t }}">+</button>
+                <button type="button" class="pdp-bundle__add" data-bundle-add data-default-id="{{ p.selected_or_first_available_variant.id }}" aria-label="{{ 'products.product.add_to_cart' | t }}">+</button>
               {%- else -%}
                 <span class="pdp-bundle__soldout">{{ 'products.product.sold_out' | t }}</span>
               {%- endif -%}
@@ -143,27 +169,6 @@
     {%- endif -%}
   </div>
 
-  {%- comment -%} Size guide modal {%- endcomment -%}
-  {%- if product.metafields.custom.size_chart != blank or section.settings.size_guide_image != blank -%}
-    <div class="size-guide" data-size-guide aria-hidden="true">
-      <div class="size-guide__overlay" data-size-guide-close></div>
-      <div class="size-guide__panel" role="dialog" aria-modal="true" aria-label="{{ 'products.size_guide.title' | t }}">
-        <button type="button" class="size-guide__close" data-size-guide-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
-        <h3 class="size-guide__title">{{ 'products.size_guide.title' | t }}</h3>
-        <div class="size-guide__body">
-          {%- if product.metafields.custom.size_chart != blank -%}
-            <div class="size-guide__table rte">{{ product.metafields.custom.size_chart.value }}</div>
-          {%- endif -%}
-          {%- if section.settings.size_guide_image != blank -%}
-            <div class="size-guide__image">
-              <img src="{{ section.settings.size_guide_image | image_url: width: 1100 }}" alt="{{ 'products.size_guide.title' | t }}" loading="lazy">
-            </div>
-          {%- endif -%}
-        </div>
-        <p class="size-guide__note">{{ 'products.size_guide.note' | t }}</p>
-      </div>
-    </div>
-  {%- endif -%}
 
   <div class="pdp-sticky" data-pdp-sticky>
     <div class="pdp-sticky__info">
