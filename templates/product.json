@@ -52,9 +52,14 @@
         "meta_returns": "30-day easy returns",
         "show_related": true
       }
+    },
+    "17847205131bc4a83e": {
+      "type": "apps",
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "17847205131bc4a83e"
   ]
 }
