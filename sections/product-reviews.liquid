@@ -1,0 +1,116 @@
+{%- liquid
+  assign avg = section.settings.avg_rating
+  assign count = section.settings.review_count
+  assign p5 = section.settings.pct_5
+  assign p4 = section.settings.pct_4
+  assign p3 = section.settings.pct_3
+  assign p2 = section.settings.pct_2
+  assign p1 = section.settings.pct_1
+-%}
+<section class="reviews section" id="reviews">
+  <div class="page-width">
+    <div class="section-header" style="margin-bottom:2rem;">
+      {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-header__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="reviews__head">
+      <div class="reviews__summary">
+        <div class="reviews__avg">{{ avg }}</div>
+        <div>
+          <div class="stars reviews__stars">
+            {%- for i in (1..5) -%}{% if i <= avg %}★{% elsif i | minus: 1 < avg %}★{% else %}☆{% endif %}{%- endfor -%}
+          </div>
+          <div class="reviews__count">{{ 'products.reviews.based_on' | t: count: count }}</div>
+        </div>
+      </div>
+
+      <div class="reviews__bars">
+        {%- assign pcts = p5 | append: ',' | append: p4 | append: ',' | append: p3 | append: ',' | append: p2 | append: ',' | append: p1 | split: ',' -%}
+        {%- for pct in pcts -%}
+          {%- assign starnum = 5 | minus: forloop.index0 -%}
+          <div class="reviews__bar-row">
+            <span class="reviews__bar-label">{{ starnum }} ★</span>
+            <span class="reviews__bar"><span class="reviews__bar-fill" style="width:{{ pct }}%"></span></span>
+            <span class="reviews__bar-pct">{{ pct }}%</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_write_button -%}
+        <a href="{{ section.settings.write_link | default: '#' }}" class="btn btn--secondary reviews__write">{{ 'products.reviews.write' | t }}</a>
+      {%- endif -%}
+    </div>
+
+    <div class="reviews__list">
+      {%- for block in section.blocks -%}
+        <article class="review" {{ block.shopify_attributes }}>
+          <div class="review__top">
+            <span class="stars review__stars">
+              {%- for i in (1..5) -%}{% if i <= block.settings.rating %}★{% else %}☆{% endif %}{%- endfor -%}
+            </span>
+            {%- if block.settings.verified -%}<span class="review__verified">{{ 'products.reviews.verified' | t }}</span>{%- endif -%}
+          </div>
+          {%- if block.settings.title != blank -%}<h4 class="review__title">{{ block.settings.title }}</h4>{%- endif -%}
+          <p class="review__body">{{ block.settings.text }}</p>
+          <div class="review__meta">
+            <span class="review__author">{{ block.settings.author }}</span>
+            {%- if block.settings.date != blank -%}<span class="review__date"> · {{ block.settings.date }}</span>{%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.app_mount -%}
+      {%- comment -%} Mount point for review apps (Judge.me, Loox, Shopify Product Reviews) {%- endcomment -%}
+      <div class="shopify-product-reviews" data-id="{{ product.id }}"></div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product reviews",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reviews" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "What the girls are saying" },
+    { "type": "header", "content": "Summary" },
+    { "type": "text", "id": "avg_rating", "label": "Average rating", "default": "4.9" },
+    { "type": "text", "id": "review_count", "label": "Total review count", "default": "2,431" },
+    { "type": "range", "id": "pct_5", "label": "5 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 88 },
+    { "type": "range", "id": "pct_4", "label": "4 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 9 },
+    { "type": "range", "id": "pct_3", "label": "3 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 2 },
+    { "type": "range", "id": "pct_2", "label": "2 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 1 },
+    { "type": "range", "id": "pct_1", "label": "1 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+    { "type": "header", "content": "Actions" },
+    { "type": "checkbox", "id": "show_write_button", "label": "Show 'Write a review' button", "default": true },
+    { "type": "url", "id": "write_link", "label": "Write a review link" },
+    { "type": "checkbox", "id": "app_mount", "label": "Add review-app mount point", "default": false }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true },
+        { "type": "text", "id": "title", "label": "Title", "default": "Obsessed!" },
+        { "type": "textarea", "id": "text", "label": "Review", "default": "Even cuter in person and so comfy. Getting compliments every time I wear these!" },
+        { "type": "text", "id": "author", "label": "Author", "default": "Sofia R." },
+        { "type": "text", "id": "date", "label": "Date", "default": "2 weeks ago" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product reviews",
+      "blocks": [
+        { "type": "review", "settings": { "rating": 5, "title": "Actually a dream", "text": "The quality is unreal for the price. Fits true to size and the details are so pretty. My new favourite pair.", "author": "Sofia R.", "date": "2 weeks ago" } },
+        { "type": "review", "settings": { "rating": 5, "title": "So so cute", "text": "Even cuter in person! Comfy enough to wear all day and I get compliments constantly. Ordering another colour.", "author": "Maya L.", "date": "1 month ago" } },
+        { "type": "review", "settings": { "rating": 4, "title": "Love them", "text": "Gorgeous and great quality. Took a couple of days to break in but so worth it. Would recommend sizing up half.", "author": "Chloe T.", "date": "1 month ago" } },
+        { "type": "review", "settings": { "rating": 5, "title": "Main character energy", "text": "Exactly the soft girl vibe I wanted. Shipping was fast and the packaging was adorable too.", "author": "Isla M.", "date": "2 months ago" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

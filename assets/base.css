@@ -573,6 +573,47 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .accordion__head svg { width: 18px; height: 18px; flex: none; }
 
 /* ============================================================
+   Product reviews
+   ============================================================ */
+.reviews { border-top: 1px solid var(--color-border); }
+.reviews__head {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 2.5rem; align-items: center;
+  background: var(--color-bg-alt); border-radius: var(--radius); padding: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 2.5rem;
+}
+.reviews__summary { display: flex; align-items: center; gap: 1.2rem; }
+.reviews__avg { font-family: var(--font-heading); font-size: 3.4rem; line-height: 1; }
+.reviews__stars { color: var(--color-accent-dark); font-size: 1.1rem; letter-spacing: .08em; }
+.reviews__count { font-size: .85rem; opacity: .7; margin-top: .3rem; }
+.reviews__bars { display: flex; flex-direction: column; gap: .35rem; max-width: 360px; width: 100%; }
+.reviews__bar-row { display: grid; grid-template-columns: 34px 1fr 40px; align-items: center; gap: .6rem; font-size: .78rem; }
+.reviews__bar-label { opacity: .7; white-space: nowrap; }
+.reviews__bar { height: 8px; background: var(--color-border); border-radius: 999px; overflow: hidden; }
+.reviews__bar-fill { display: block; height: 100%; background: var(--color-accent-dark); border-radius: 999px; }
+.reviews__bar-pct { opacity: .6; text-align: right; }
+.reviews__write { white-space: nowrap; }
+
+.reviews__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+.review { border: 1px solid var(--color-border); border-radius: var(--radius); padding: 1.4rem 1.6rem; background: var(--color-bg); }
+.review__top { display: flex; align-items: center; gap: .8rem; margin-bottom: .6rem; }
+.review__stars { color: var(--color-accent-dark); letter-spacing: .06em; }
+.review__verified { font-size: .68rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--color-accent-dark); background: var(--color-bg-alt); border-radius: 999px; padding: .2rem .55rem; }
+.review__verified::before { content: '✓ '; }
+.review__title { font-size: 1rem; margin: 0 0 .4rem; }
+.review__body { font-size: .92rem; opacity: .85; margin: 0 0 .8rem; }
+.review__meta { font-size: .8rem; }
+.review__author { font-weight: 700; }
+.review__date { opacity: .55; }
+
+@media (max-width: 900px) {
+  .reviews__head { grid-template-columns: 1fr; gap: 1.5rem; text-align: left; }
+  .reviews__write { justify-self: start; }
+}
+@media (max-width: 749px) {
+  .reviews__list { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    Collection page
    ============================================================ */
 .collection-hero { text-align: center; padding-block: 2.5rem; }

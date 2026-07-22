@@ -59,6 +59,11 @@
       "choose_options": "Choose options",
       "details": "Details",
       "related": "You may also love"
+    },
+    "reviews": {
+      "based_on": "Based on {{ count }} reviews",
+      "verified": "Verified",
+      "write": "Write a review"
     }
   },
   "sections": {
