@@ -554,7 +554,10 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 .accordion.is-open .accordion__icon { transform: rotate(45deg); }
 
 /* Size guide link + modal */
-.product__rating-jdgm { margin-bottom: 1rem; }
+.product__rating-jdgm { margin-bottom: 1rem; min-height: 0; }
+/* Judge.me: hide its built-in widget title (we show our own "What the girls are saying") */
+.jdgm-rev-widg__title { display: none !important; }
+.jdgm-widget { --jdgm-primary-color: var(--color-accent-dark); }
 .product__size-guide-link {
   display: inline-flex; align-items: center; gap: .45rem; background: none; border: 0;
   cursor: pointer; color: var(--color-text); font-family: inherit; font-size: .8rem;
