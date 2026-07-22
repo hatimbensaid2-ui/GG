@@ -87,17 +87,25 @@
             "collection": "matching-sets",
             "title": "Sets"
           }
+        },
+        "c4": {
+          "type": "tile",
+          "settings": {
+            "collection": "dresses",
+            "title": "Dresses"
+          }
         }
       },
       "block_order": [
         "c1",
         "c2",
-        "c3"
+        "c3",
+        "c4"
       ],
       "settings": {
         "eyebrow": "Shop by",
         "title": "Shop by category",
-        "columns": 3
+        "columns": 4
       }
     },
     "bestsellers": {

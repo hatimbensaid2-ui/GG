@@ -16,7 +16,7 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'menu' -%}
-            <div {{ block.shopify_attributes }}>
+            <div class="footer__col footer__col--menu" {{ block.shopify_attributes }}>
               <div class="footer__col-title">{{ block.settings.heading }}</div>
               <ul class="footer__list">
                 {%- for link in block.settings.menu.links -%}
@@ -25,7 +25,7 @@
               </ul>
             </div>
           {%- when 'newsletter' -%}
-            <div {{ block.shopify_attributes }}>
+            <div class="footer__col footer__col--news" {{ block.shopify_attributes }}>
               <div class="footer__col-title">{{ block.settings.heading }}</div>
               <p class="footer__brand-text" style="margin-bottom:1rem;">{{ block.settings.text }}</p>
               {%- form 'customer', class: 'footer__newsletter' -%}
