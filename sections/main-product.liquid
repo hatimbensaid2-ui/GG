@@ -36,10 +36,14 @@
         {%- if product.vendor != blank -%}<div class="product__vendor">{{ product.vendor }}</div>{%- endif -%}
         <h1 class="product__title">{{ product.title }}</h1>
 
-        <a href="#reviews" class="product__rating">
-          <span class="stars">★★★★★</span>
-          <span>{{ section.settings.rating_text }}</span>
-        </a>
+        {%- if section.settings.rating_source == 'judgeme' -%}
+          <div class="jdgm-widget jdgm-preview-badge product__rating-jdgm" data-id="{{ product.id }}" data-template="product"></div>
+        {%- else -%}
+          <a href="#reviews" class="product__rating">
+            <span class="stars">★★★★★</span>
+            <span>{{ section.settings.rating_text }}</span>
+          </a>
+        {%- endif -%}
 
         <div class="product__price">
           {% render 'price', product: product, large: true %}
@@ -62,6 +66,12 @@
               </div>
             {%- endfor -%}
           {%- endunless -%}
+
+          {%- if product.metafields.custom.size_chart != blank or section.settings.size_guide_image != blank -%}
+            <button type="button" class="product__size-guide-link" data-size-guide-open>
+              {% render 'icon-ruler' %} {{ 'products.size_guide.link' | t }}
+            </button>
+          {%- endif -%}
 
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
@@ -105,7 +115,54 @@
         </div>
       </div>
     </div>
+
+    {%- comment -%} Bundle / complete the look {%- endcomment -%}
+    {%- assign bundle_products = product.metafields.custom.bundles.value -%}
+    {%- if bundle_products != blank and bundle_products.size > 0 -%}
+      <div class="pdp-bundle">
+        <div class="pdp-bundle__title">{{ 'products.bundle.title' | t }}</div>
+        <div class="pdp-bundle__items">
+          {%- for p in bundle_products -%}
+            <div class="pdp-bundle__item">
+              <a href="{{ p.url }}" class="pdp-bundle__img">
+                {%- if p.featured_image -%}<img src="{{ p.featured_image | image_url: width: 200 }}" alt="{{ p.featured_image.alt | escape }}" loading="lazy">{%- endif -%}
+              </a>
+              <div class="pdp-bundle__info">
+                <a href="{{ p.url }}" class="pdp-bundle__name">{{ p.title }}</a>
+                {% render 'price', product: p %}
+              </div>
+              {%- if p.available -%}
+                <button type="button" class="pdp-bundle__add" data-quick-add="{{ p.selected_or_first_available_variant.id }}" aria-label="{{ 'products.product.add_to_cart' | t }}">+</button>
+              {%- else -%}
+                <span class="pdp-bundle__soldout">{{ 'products.product.sold_out' | t }}</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
   </div>
+
+  {%- comment -%} Size guide modal {%- endcomment -%}
+  {%- if product.metafields.custom.size_chart != blank or section.settings.size_guide_image != blank -%}
+    <div class="size-guide" data-size-guide aria-hidden="true">
+      <div class="size-guide__overlay" data-size-guide-close></div>
+      <div class="size-guide__panel" role="dialog" aria-modal="true" aria-label="{{ 'products.size_guide.title' | t }}">
+        <button type="button" class="size-guide__close" data-size-guide-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+        <h3 class="size-guide__title">{{ 'products.size_guide.title' | t }}</h3>
+        <div class="size-guide__body">
+          {%- if product.metafields.custom.size_chart != blank -%}
+            <div class="size-guide__table rte">{{ product.metafields.custom.size_chart.value }}</div>
+          {%- endif -%}
+          {%- if section.settings.size_guide_image != blank -%}
+            <div class="size-guide__image">
+              <img src="{{ section.settings.size_guide_image | image_url: width: 1100 }}" alt="{{ 'products.size_guide.title' | t }}" loading="lazy">
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
 
   <div class="pdp-sticky" data-pdp-sticky>
     <div class="pdp-sticky__info">
@@ -144,7 +201,12 @@
 {
   "name": "Product",
   "settings": [
-    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "4.9 (2,431 reviews)" },
+    { "type": "header", "content": "Reviews" },
+    { "type": "select", "id": "rating_source", "label": "Rating badge", "options": [ { "value": "judgeme", "label": "Judge.me badge" }, { "value": "static", "label": "Static text" } ], "default": "judgeme" },
+    { "type": "text", "id": "rating_text", "label": "Static rating text", "default": "4.9 (2,431 reviews)" },
+    { "type": "header", "content": "Size guide" },
+    { "type": "image_picker", "id": "size_guide_image", "label": "Size guide / measuring image", "info": "Shared measuring guide shown in the size-guide popup. The per-product size table comes from the product's 'Size chart' metafield." },
+    { "type": "header", "content": "Product" },
     { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true },
     { "type": "checkbox", "id": "show_meta", "label": "Show shipping/returns note", "default": true },
     { "type": "text", "id": "meta_shipping", "label": "Shipping note", "default": "Free shipping over $90" },

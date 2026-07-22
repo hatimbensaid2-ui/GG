@@ -64,6 +64,13 @@
       "based_on": "Based on {{ count }} reviews",
       "verified": "Verified",
       "write": "Write a review"
+    },
+    "size_guide": {
+      "link": "Size guide",
+      "title": "Size & measuring guide"
+    },
+    "bundle": {
+      "title": "Complete your fit"
     }
   },
   "sections": {

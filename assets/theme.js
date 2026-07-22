@@ -67,6 +67,24 @@
     if (sub) { sub.closest('.mobile-nav__item').classList.toggle('is-open'); }
   });
 
+  /* ---------- size guide modal ---------- */
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-size-guide-open]')) {
+      var m = $('[data-size-guide]');
+      if (m) { m.classList.add('is-open'); document.body.style.overflow = 'hidden'; }
+    }
+    if (e.target.closest('[data-size-guide-close]')) {
+      var m2 = $('[data-size-guide]');
+      if (m2) { m2.classList.remove('is-open'); document.body.style.overflow = ''; }
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      var m = $('[data-size-guide].is-open');
+      if (m) { m.classList.remove('is-open'); document.body.style.overflow = ''; }
+    }
+  });
+
   /* ---------- search modal ---------- */
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-search-open]')) {

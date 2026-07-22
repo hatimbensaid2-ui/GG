@@ -14,6 +14,10 @@
       <h2 class="section-header__title">{{ section.settings.title }}</h2>
     </div>
 
+    {%- if section.settings.review_source == 'judgeme' -%}
+      {%- comment -%} Judge.me review widget mounts here {%- endcomment -%}
+      <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}"></div>
+    {%- else -%}
     <div class="reviews__head">
       <div class="reviews__summary">
         <div class="reviews__avg">{{ avg }}</div>
@@ -60,10 +64,6 @@
         </article>
       {%- endfor -%}
     </div>
-
-    {%- if section.settings.app_mount -%}
-      {%- comment -%} Mount point for review apps (Judge.me, Loox, Shopify Product Reviews) {%- endcomment -%}
-      <div class="shopify-product-reviews" data-id="{{ product.id }}"></div>
     {%- endif -%}
   </div>
 </section>
@@ -74,7 +74,8 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Reviews" },
     { "type": "text", "id": "title", "label": "Heading", "default": "What the girls are saying" },
-    { "type": "header", "content": "Summary" },
+    { "type": "select", "id": "review_source", "label": "Reviews from", "options": [ { "value": "judgeme", "label": "Judge.me app" }, { "value": "builtin", "label": "Built-in (editor reviews below)" } ], "default": "judgeme", "info": "Judge.me renders its widget here. Use Built-in only if you are not using a reviews app." },
+    { "type": "header", "content": "Built-in summary (only used when 'Built-in' is selected)" },
     { "type": "text", "id": "avg_rating", "label": "Average rating", "default": "4.9" },
     { "type": "text", "id": "review_count", "label": "Total review count", "default": "2,431" },
     { "type": "range", "id": "pct_5", "label": "5 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 88 },
@@ -84,8 +85,7 @@
     { "type": "range", "id": "pct_1", "label": "1 star %", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
     { "type": "header", "content": "Actions" },
     { "type": "checkbox", "id": "show_write_button", "label": "Show 'Write a review' button", "default": true },
-    { "type": "url", "id": "write_link", "label": "Write a review link" },
-    { "type": "checkbox", "id": "app_mount", "label": "Add review-app mount point", "default": false }
+    { "type": "url", "id": "write_link", "label": "Write a review link" }
   ],
   "blocks": [
     {
