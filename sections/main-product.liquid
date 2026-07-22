@@ -201,10 +201,23 @@
 
 {%- comment -%} Product reviews (Judge.me widget) {%- endcomment -%}
 {%- if section.settings.show_reviews -%}
+  {%- liquid
+    assign app_block_count = 0
+    for block in section.blocks
+      if block.type == '@app'
+        assign app_block_count = app_block_count | plus: 1
+      endif
+    endfor
+  -%}
   <div class="section reviews" id="reviews">
     <div class="page-width">
       <div class="section-header"><h2 class="section-header__title">{{ section.settings.reviews_title }}</h2></div>
-      {%- if section.settings.rating_source == 'judgeme' -%}
+      {%- if app_block_count > 0 -%}
+        {%- comment -%} Review apps (Judge.me etc.) added via the theme editor render here {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}{% render block %}{%- endif -%}
+        {%- endfor -%}
+      {%- elsif section.settings.rating_source == 'judgeme' -%}
         <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}"></div>
       {%- else -%}
         <p style="text-align:center;opacity:.7;">{{ 'products.reviews.based_on' | t: count: section.settings.rating_text }}</p>
@@ -232,6 +245,7 @@
     { "type": "checkbox", "id": "show_related", "label": "Show related products", "default": true }
   ],
   "blocks": [
+    { "type": "@app" },
     { "type": "description", "name": "Description", "limit": 1, "settings": [] },
     {
       "type": "accordion",
