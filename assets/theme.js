@@ -85,6 +85,18 @@
     }
   });
 
+  /* ---------- size chart cm/inch toggle ---------- */
+  document.addEventListener('click', function (e) {
+    var u = e.target.closest('[data-sg-unit]');
+    if (!u) return;
+    var sg = u.closest('[data-sg]');
+    if (!sg) return;
+    var unit = u.getAttribute('data-sg-unit');
+    $$('[data-sg-unit]', sg).forEach(function (b) { b.classList.toggle('is-active', b === u); });
+    $$('[data-sg-cm]', sg).forEach(function (t) { t.hidden = unit !== 'cm'; });
+    $$('[data-sg-in]', sg).forEach(function (t) { t.hidden = unit !== 'in'; });
+  });
+
   /* ---------- search modal ---------- */
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-search-open]')) {
