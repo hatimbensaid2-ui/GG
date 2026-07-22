@@ -84,12 +84,16 @@
 
     <div id="SearchModal" class="search-modal" aria-hidden="true">
       <div class="search-modal__overlay" data-search-close></div>
-      <div class="search-modal__inner">
-        <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form">
-          <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="search-modal__input" autocomplete="off">
-          <button type="submit" class="search-modal__submit" aria-label="{{ 'general.search.submit' | t }}">{% render 'icon-search' %}</button>
-        </form>
-        <button class="search-modal__close" data-search-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+      <div class="search-modal__panel">
+        <div class="search-modal__bar page-width">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form" data-predictive-form>
+            <span class="search-modal__icon">{% render 'icon-search' %}</span>
+            <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="search-modal__input" autocomplete="off" data-predictive-input>
+            <button type="submit" class="search-modal__submit" aria-label="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button>
+          </form>
+          <button class="search-modal__close" data-search-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
+        </div>
+        <div class="search-modal__results page-width" data-predictive-results></div>
       </div>
     </div>
 
@@ -98,7 +102,8 @@
         routes: {
           cart_add_url: '{{ routes.cart_add_url }}',
           cart_change_url: '{{ routes.cart_change_url }}',
-          cart_url: '{{ routes.cart_url }}'
+          cart_url: '{{ routes.cart_url }}',
+          search_url: '{{ routes.search_url }}'
         },
         cartType: '{{ settings.cart_type }}',
         freeShipThreshold: {{ settings.cart_free_shipping_threshold | default: 0 | times: 100 }},
@@ -107,7 +112,12 @@
           addToCart: {{ 'products.product.add_to_cart' | t | json }},
           soldOut: {{ 'products.product.sold_out' | t | json }},
           added: {{ 'products.product.added' | t | json }},
-          youSaved: {{ 'sections.cart.you_saved' | t | json }}
+          youSaved: {{ 'sections.cart.you_saved' | t | json }},
+          searching: {{ 'general.search.searching' | t | json }},
+          noResults: {{ 'general.search.no_matches_short' | t | json }},
+          suggestions: {{ 'general.search.suggestions' | t | json }},
+          collections: {{ 'general.search.collections' | t | json }},
+          products: {{ 'general.search.products' | t | json }}
         }
       };
     </script>

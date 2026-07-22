@@ -11,6 +11,10 @@
   <div class="cart-drawer__items"></div>
 
   <div class="cart-drawer__foot">
+    <form class="cart-discount" data-discount-form>
+      <input type="text" name="discount" class="cart-discount__input" placeholder="{{ 'sections.cart.discount_placeholder' | t }}" autocomplete="off">
+      <button type="submit" class="cart-discount__btn">{{ 'sections.cart.apply' | t }}</button>
+    </form>
     <div class="cart-drawer__discounts"></div>
     <div class="cart-drawer__subtotal">
       <span>{{ 'sections.cart.subtotal' | t }}</span>

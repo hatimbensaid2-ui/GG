@@ -38,6 +38,10 @@
         </div>
 
         <div style="margin-top:2rem;text-align:right;">
+          <form class="cart-discount" data-discount-form style="max-width:340px;margin-left:auto;">
+            <input type="text" name="discount" class="cart-discount__input" placeholder="{{ 'sections.cart.discount_placeholder' | t }}" autocomplete="off">
+            <button type="submit" class="cart-discount__btn">{{ 'sections.cart.apply' | t }}</button>
+          </form>
           {%- if cart.cart_level_discount_applications.size > 0 or cart.total_discount > 0 -%}
             <div class="cart-page__discounts">
               {%- for discount in cart.cart_level_discount_applications -%}

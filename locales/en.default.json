@@ -13,7 +13,12 @@
       "results_with_count": {
         "one": "{{ count }} result",
         "other": "{{ count }} results"
-      }
+      },
+      "searching": "Searching…",
+      "no_matches_short": "No matches for",
+      "suggestions": "Suggestions",
+      "collections": "Collections",
+      "products": "Products"
     },
     "newsletter": {
       "placeholder": "Enter your email",
@@ -66,7 +71,9 @@
       "remove": "Remove",
       "empty": "Your bag is empty.",
       "you_saved": "You saved",
-      "discount": "Discount"
+      "discount": "Discount",
+      "discount_placeholder": "Discount code",
+      "apply": "Apply"
     }
   },
   "collections": {

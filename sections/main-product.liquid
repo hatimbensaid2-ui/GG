@@ -107,6 +107,16 @@
     </div>
   </div>
 
+  <div class="pdp-sticky" data-pdp-sticky>
+    <div class="pdp-sticky__info">
+      <span class="pdp-sticky__title">{{ product.title }}</span>
+      <div class="pdp-sticky__price">{% render 'price', product: product %}</div>
+    </div>
+    <button type="button" class="btn" data-sticky-add {% unless product.available %}disabled{% endunless %}>
+      {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+    </button>
+  </div>
+
   <script type="application/json" data-product-json>
     {{ product | json }}
   </script>

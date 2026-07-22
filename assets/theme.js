@@ -77,6 +77,75 @@
   });
 
   /* ============================================================
+     Predictive search
+     ============================================================ */
+  (function initPredictive() {
+    var input = $('[data-predictive-input]');
+    var results = $('[data-predictive-results]');
+    if (!input || !results) return;
+    var base = (CFG.routes && CFG.routes.search_url) ? CFG.routes.search_url : '/search';
+    var timer, lastQ = '';
+
+    function priceStr(p) {
+      if (p == null || p === '') return '';
+      if (typeof p === 'number') return formatMoney(p);
+      if (/^\d+(\.\d+)?$/.test(p)) return formatMoney(Math.round(parseFloat(p) * 100));
+      return p;
+    }
+
+    function render(data, q) {
+      var r = (data.resources && data.resources.results) || {};
+      var products = r.products || [];
+      var collections = r.collections || [];
+      var queries = r.queries || [];
+      if (!products.length && !collections.length && !queries.length) {
+        results.innerHTML = '<div class="predictive__empty">' + (CFG.strings.noResults || 'No matches for') + ' “' + q + '”</div>';
+        return;
+      }
+      var left = '';
+      if (queries.length) {
+        left += '<div class="predictive__heading">' + (CFG.strings.suggestions || 'Suggestions') + '</div><ul class="predictive__links">' +
+          queries.slice(0, 5).map(function (x) { return '<li><a href="' + x.url + '">' + x.text + '</a></li>'; }).join('') + '</ul>';
+      }
+      if (collections.length) {
+        left += '<div class="predictive__heading">' + (CFG.strings.collections || 'Collections') + '</div><ul class="predictive__links">' +
+          collections.slice(0, 5).map(function (x) { return '<li><a href="' + x.url + '">' + x.title + '</a></li>'; }).join('') + '</ul>';
+      }
+      var right = '';
+      if (products.length) {
+        right = '<div class="predictive__heading">' + (CFG.strings.products || 'Products') + '</div><div class="predictive__products">' +
+          products.slice(0, 8).map(function (p) {
+            var img = p.featured_image && p.featured_image.url ? p.featured_image.url : (p.image || '');
+            var imgTag = img ? '<img src="' + img + '" alt="" loading="lazy">' : '';
+            return '<a class="predictive-card" href="' + p.url + '"><div class="predictive-card__media">' + imgTag + '</div>' +
+              '<div class="predictive-card__title">' + p.title + '</div>' +
+              '<div class="predictive-card__price">' + priceStr(p.price) + '</div></a>';
+          }).join('') + '</div>';
+      }
+      results.innerHTML = '<div class="predictive__cols"><div>' + (left || '') + '</div><div>' + right + '</div></div>';
+    }
+
+    function search(q) {
+      var url = base + '/suggest.json?q=' + encodeURIComponent(q) +
+        '&resources[type]=product,collection,query&resources[limit]=8&resources[options][unavailable_products]=last';
+      fetch(url, { headers: { 'Accept': 'application/json' } })
+        .then(function (res) { return res.json(); })
+        .then(function (data) { render(data, q); })
+        .catch(function () { results.innerHTML = ''; });
+    }
+
+    input.addEventListener('input', function () {
+      var q = input.value.trim();
+      clearTimeout(timer);
+      if (q.length < 2) { results.innerHTML = ''; lastQ = ''; return; }
+      if (q === lastQ) return;
+      lastQ = q;
+      results.innerHTML = '<div class="predictive__loading">' + (CFG.strings.searching || 'Searching…') + '</div>';
+      timer = setTimeout(function () { search(q); }, 240);
+    });
+  })();
+
+  /* ============================================================
      Cart
      ============================================================ */
   function getCart() {
@@ -189,6 +258,17 @@
       if (e.target.closest('[data-qty-down]')) changeLine(line, Math.max(0, qty - 1));
       if (e.target.closest('[data-remove]')) changeLine(line, 0);
     }
+  });
+
+  /* ---------- discount code ---------- */
+  document.addEventListener('submit', function (e) {
+    var form = e.target.closest('[data-discount-form]');
+    if (!form) return;
+    e.preventDefault();
+    var code = (form.querySelector('[name="discount"]').value || '').trim();
+    if (!code) return;
+    var redirect = (CFG.routes && CFG.routes.cart_url) ? CFG.routes.cart_url : '/cart';
+    window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(redirect);
   });
 
   /* ---------- add to cart (forms + quick add) ---------- */
@@ -314,8 +394,9 @@
     var selected = {};
     var form = $('[data-product-form]', root);
     var idInput = form ? form.querySelector('[name="id"]') : null;
-    var priceEl = $('[data-price]', root);
+    var priceEls = $$('[data-price]', root);
     var addBtn = $('[data-add-btn]', root);
+    var stickyAdd = $('[data-sticky-add]', root);
     var gallery = initGallery(root, product);
 
     // default from first available variant
@@ -336,21 +417,32 @@
       var v = currentVariant();
       if (v) {
         if (idInput) idInput.value = v.id;
-        if (priceEl) {
-          var html = '<span class="' + (v.compare_at_price > v.price ? 'price__sale' : '') + '">' + formatMoney(v.price) + '</span>';
-          if (v.compare_at_price > v.price) html += ' <span class="price__compare">' + formatMoney(v.compare_at_price) + '</span>';
-          priceEl.innerHTML = html;
-        }
-        if (addBtn) {
-          addBtn.disabled = !v.available;
-          addBtn.textContent = v.available ? (CFG.strings.addToCart || 'Add to bag') : (CFG.strings.soldOut || 'Sold out');
-        }
+        var html = '<span class="' + (v.compare_at_price > v.price ? 'price__sale' : '') + '">' + formatMoney(v.price) + '</span>';
+        if (v.compare_at_price > v.price) html += ' <span class="price__compare">' + formatMoney(v.compare_at_price) + '</span>';
+        priceEls.forEach(function (el) { el.innerHTML = html; });
+        [addBtn, stickyAdd].forEach(function (btn) {
+          if (!btn) return;
+          btn.disabled = !v.available;
+          btn.textContent = v.available ? (CFG.strings.addToCart || 'Add to bag') : (CFG.strings.soldOut || 'Sold out');
+        });
         if (v.featured_media && gallery) {
           gallery.goTo(v.featured_media.position - 1);
         }
-      } else if (addBtn) {
-        addBtn.disabled = true;
-        addBtn.textContent = 'Unavailable';
+      } else {
+        [addBtn, stickyAdd].forEach(function (btn) { if (btn) { btn.disabled = true; btn.textContent = 'Unavailable'; } });
+      }
+    }
+
+    // sticky add-to-cart mirrors the main button
+    if (stickyAdd && addBtn) {
+      stickyAdd.addEventListener('click', function () { addBtn.click(); });
+    }
+    if (addBtn && 'IntersectionObserver' in window) {
+      var stickyBar = $('[data-pdp-sticky]', root);
+      if (stickyBar) {
+        new IntersectionObserver(function (entries) {
+          stickyBar.classList.toggle('is-visible', !entries[0].isIntersecting);
+        }, { rootMargin: '0px 0px -10% 0px' }).observe(addBtn);
       }
     }
 
