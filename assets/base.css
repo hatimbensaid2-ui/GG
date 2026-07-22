@@ -65,10 +65,10 @@ ul, ol { margin: 0 0 1rem; padding-left: 1.2rem; }
 }
 .page-width--narrow { max-width: 820px; }
 
-.section { padding-block: calc(var(--section-spacing) * .38); }
-.section--tight { padding-block: calc(var(--section-spacing) * .22); }
+.section { padding-block: calc(var(--section-spacing) * .25); }
+.section--tight { padding-block: calc(var(--section-spacing) * .15); }
 
-.section-header { text-align: center; margin-bottom: 1.6rem; }
+.section-header { text-align: center; margin-bottom: 1.2rem; }
 .section-header__eyebrow {
   display: inline-block; font-size: .72rem; letter-spacing: .22em;
   text-transform: uppercase; color: var(--color-accent-dark);
