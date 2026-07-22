@@ -49,10 +49,6 @@
           {% render 'price', product: product, large: true %}
         </div>
 
-        {%- if product.description != blank -%}
-          <div class="rte" style="margin-bottom:1.5rem;">{{ product.description | truncatewords: 40 }}</div>
-        {%- endif -%}
-
         <form data-product-form>
           {%- unless product.has_only_default_variant -%}
             {%- for option in product.options_with_values -%}
