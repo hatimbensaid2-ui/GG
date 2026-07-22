@@ -198,6 +198,20 @@
   </div>
 {%- endif -%}
 
+{%- comment -%} Product reviews (Judge.me widget) {%- endcomment -%}
+{%- if section.settings.show_reviews -%}
+  <div class="section reviews" id="reviews">
+    <div class="page-width">
+      <div class="section-header"><h2 class="section-header__title">{{ section.settings.reviews_title }}</h2></div>
+      {%- if section.settings.rating_source == 'judgeme' -%}
+        <div id="judgeme_product_reviews" class="jdgm-widget jdgm-review-widget" data-id="{{ product.id }}" data-product-title="{{ product.title | escape }}"></div>
+      {%- else -%}
+        <p style="text-align:center;opacity:.7;">{{ 'products.reviews.based_on' | t: count: section.settings.rating_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Product",
@@ -205,6 +219,8 @@
     { "type": "header", "content": "Reviews" },
     { "type": "select", "id": "rating_source", "label": "Rating badge", "options": [ { "value": "judgeme", "label": "Judge.me badge" }, { "value": "static", "label": "Static text" } ], "default": "judgeme" },
     { "type": "text", "id": "rating_text", "label": "Static rating text", "default": "4.9 (2,431 reviews)" },
+    { "type": "checkbox", "id": "show_reviews", "label": "Show reviews section", "default": true },
+    { "type": "text", "id": "reviews_title", "label": "Reviews heading", "default": "What the girls are saying" },
     { "type": "header", "content": "Size guide" },
     { "type": "image_picker", "id": "size_guide_image", "label": "Size guide / measuring image", "info": "Shared measuring guide shown in the size-guide popup. The per-product size table comes from the product's 'Size chart' metafield." },
     { "type": "header", "content": "Product" },

@@ -8,17 +8,7 @@
         "care": { "type": "accordion", "settings": { "title": "Size & care", "content": "<p>Runs true to size. Machine wash cold, hang to dry to keep it soft.</p>" } }
       },
       "block_order": ["desc", "ship", "care"]
-    },
-    "reviews": {
-      "type": "product-reviews",
-      "blocks": {
-        "rv1": { "type": "review", "settings": { "rating": 5, "title": "Actually a dream", "text": "The quality is unreal for the price. Fits true to size and the details are so pretty. My new favourite pair.", "author": "Sofia R.", "date": "2 weeks ago" } },
-        "rv2": { "type": "review", "settings": { "rating": 5, "title": "So so cute", "text": "Even cuter in person! Comfy enough to wear all day and I get compliments constantly. Ordering another colour.", "author": "Maya L.", "date": "1 month ago" } },
-        "rv3": { "type": "review", "settings": { "rating": 4, "title": "Love them", "text": "Gorgeous and great quality. Took a couple of days to break in but so worth it. Would recommend sizing up half.", "author": "Chloe T.", "date": "1 month ago" } },
-        "rv4": { "type": "review", "settings": { "rating": 5, "title": "Main character energy", "text": "Exactly the soft girl vibe I wanted. Shipping was fast and the packaging was adorable too.", "author": "Isla M.", "date": "2 months ago" } }
-      },
-      "block_order": ["rv1", "rv2", "rv3", "rv4"]
     }
   },
-  "order": ["main", "reviews"]
+  "order": ["main"]
 }

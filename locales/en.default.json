@@ -70,6 +70,7 @@
       "related": "You may also love"
     },
     "reviews": {
+      "title": "What the girls are saying",
       "based_on": "Based on {{ count }} reviews",
       "verified": "Verified",
       "write": "Write a review"
