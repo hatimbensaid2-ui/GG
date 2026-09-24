@@ -11,47 +11,37 @@
   "sections": {
     "main": {
       "type": "main-product",
+      "settings": {
+        "rating_source": "static",
+        "rating_text": "4.9 (1,200+ reviews)",
+        "meta_shipping": "Free UK shipping over £60",
+        "meta_returns": "30-day easy returns"
+      },
       "blocks": {
-        "judge_me_reviews_preview_badge_EhBFXJ": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
         "desc": {
           "type": "description",
           "settings": {}
+        },
+        "size": {
+          "type": "accordion",
+          "settings": {
+            "title": "Size & care",
+            "content": "<p>Hand wash cold, lay flat to dry. See the size guide for measurements.</p>"
+          }
         },
         "ship": {
           "type": "accordion",
           "settings": {
             "title": "Shipping & returns",
-            "content": "<p>Free shipping on orders over $90. Easy 30-day returns on everything.</p>"
-          }
-        },
-        "care": {
-          "type": "accordion",
-          "settings": {
-            "title": "Size & care",
-            "content": "<p>Runs true to size. Machine wash cold, hang to dry to keep it soft.</p>"
+            "content": "<p>Free UK shipping over £60. Easy 30-day returns on all orders.</p>"
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_preview_badge_EhBFXJ",
         "desc",
-        "ship",
-        "care"
-      ],
-      "settings": {
-        "rating_source": "judgeme",
-        "rating_text": "4.9 (2,431 reviews)",
-        "show_reviews": true,
-        "reviews_title": "What the girls are saying",
-        "show_dynamic_checkout": true,
-        "show_meta": true,
-        "meta_shipping": "Free shipping over $90",
-        "meta_returns": "30-day easy returns",
-        "show_related": true
-      }
+        "size",
+        "ship"
+      ]
     }
   },
   "order": [

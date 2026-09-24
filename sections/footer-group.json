@@ -17,22 +17,22 @@
         "shop": {
           "type": "menu",
           "settings": {
-            "heading": "Shop",
+            "title": "Shop",
             "menu": "main-menu"
           }
         },
         "help": {
           "type": "menu",
           "settings": {
-            "heading": "Help",
+            "title": "Help",
             "menu": "footer"
           }
         },
         "news": {
           "type": "newsletter",
           "settings": {
-            "heading": "Join the club",
-            "text": "Get 10% off your first order plus early access to drops."
+            "title": "Join the club",
+            "text": "Early access to drops & 10% off your first order."
           }
         }
       },
@@ -41,11 +41,7 @@
         "help",
         "news"
       ],
-      "settings": {
-        "logo": "shopify://shop_images/logo_transparent-02.png",
-        "tagline": "Soft looks for the main character. Curated drops, dreamy fits, delivered worldwide.",
-        "show_payment": true
-      }
+      "settings": {}
     }
   },
   "order": [

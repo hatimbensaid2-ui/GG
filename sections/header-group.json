@@ -11,28 +11,26 @@
   "type": "header",
   "name": "Header group",
   "sections": {
-    "announcement-bar": {
+    "announcement": {
       "type": "announcement-bar",
       "blocks": {
         "m1": {
           "type": "message",
           "settings": {
-            "text": "Free shipping on orders over $90 ✿",
-            "link": ""
+            "text": "Up to 50% off — Autumn Sale is on ✿",
+            "link": "shopify://collections/all"
           }
         },
         "m2": {
           "type": "message",
           "settings": {
-            "text": "New drops every week join the club 🎀",
-            "link": ""
+            "text": "Free UK shipping over £60 🎀"
           }
         },
         "m3": {
           "type": "message",
           "settings": {
-            "text": "Student discount available at checkout",
-            "link": ""
+            "text": "New drops every Friday — join the club"
           }
         }
       },
@@ -43,22 +41,20 @@
       ],
       "settings": {
         "scrolling": true,
-        "bg": "#F2BECD",
-        "text_color": "#ffffff"
+        "bg": "#C25C7A",
+        "text_color": "#FFFFFF"
       }
     },
     "header": {
       "type": "header",
       "settings": {
-        "logo": "shopify://shop_images/logo_transparent-01.png",
         "menu": "main-menu",
-        "mega_image_link": "",
-        "mega_image_caption": ""
+        "logo_width": 160
       }
     }
   },
   "order": [
-    "announcement-bar",
+    "announcement",
     "header"
   ]
 }

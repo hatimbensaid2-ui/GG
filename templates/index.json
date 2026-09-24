@@ -12,171 +12,45 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "image": "shopify://shop_images/mhappi_1784610361_3945917269508841879_1537344256.jpg",
         "height": "medium",
-        "overlay_opacity": 25,
-        "dark_text": false,
-        "alignment": "left",
-        "eyebrow": "New Season",
-        "title": "Soft girl era starts here",
-        "text": "",
-        "button_label": "Shop new in",
-        "button_link": "shopify://collections/new-in",
-        "button2_label": "Shop best sellers",
-        "button2_link": "shopify://collections/best-sellers"
+        "overlay_opacity": 0,
+        "dark_text": true,
+        "alignment": "center",
+        "v_align": "center",
+        "eyebrow": "The Polka Dot Edit",
+        "title": "Dotty about you",
+        "text": "Heavenly made, dreamy & frilly — polka dot sets, bows and princess platforms for your soft girl era.",
+        "button_label": "Shop polka dots",
+        "button_link": "shopify://collections/all",
+        "button2_label": "New arrivals",
+        "button2_link": "shopify://collections/all"
       }
     },
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "b1": {
-          "type": "item",
-          "settings": {
-            "text": "soft girl"
-          }
-        },
-        "b2": {
-          "type": "item",
-          "settings": {
-            "text": "Main character"
-          }
-        },
-        "b3": {
-          "type": "item",
-          "settings": {
-            "text": "Coquette"
-          }
-        },
-        "b4": {
-          "type": "item",
-          "settings": {
-            "text": "New drops weekly"
-          }
-        }
-      },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3",
-        "b4"
-      ],
-      "settings": {
-        "bg": "#f2becd"
-      }
-    },
-    "categories": {
-      "type": "collection-list",
-      "blocks": {
-        "c1": {
-          "type": "tile",
-          "settings": {
-            "collection": "boots",
-            "title": "Boots"
-          }
-        },
-        "c2": {
-          "type": "tile",
-          "settings": {
-            "collection": "best-sellers",
-            "title": "Best Seller"
-          }
-        },
-        "c3": {
-          "type": "tile",
-          "settings": {
-            "collection": "matching-sets",
-            "title": "Sets"
-          }
-        },
-        "c4": {
-          "type": "tile",
-          "settings": {
-            "collection": "dresses",
-            "title": "Dresses"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4"
-      ],
-      "settings": {
-        "eyebrow": "Shop by",
-        "title": "Shop by category",
-        "columns": 4
-      }
-    },
-    "bestsellers": {
-      "type": "featured-collection",
-      "settings": {
-        "eyebrow": "Trending",
-        "title": "Best sellers",
-        "text": "",
-        "collection": "best-sellers",
-        "limit": 8,
-        "columns": 4,
-        "button_label": "Shop all"
-      }
-    },
-    "image_text": {
-      "type": "image-with-text",
-      "settings": {
-        "image": "shopify://shop_images/IMG_3987.png",
-        "reverse": false,
-        "eyebrow": "Our promise",
-        "title": "Made for the soft girl in you",
-        "text": "<p>Every piece is chosen to feel like a hug — soft fabrics, flattering fits and colours that make you glow. Ethically sourced, endlessly cute.</p>",
-        "button_label": "About us",
-        "button_link": "shopify://pages/about-us"
-      }
-    },
-    "newin": {
-      "type": "featured-collection",
-      "settings": {
-        "eyebrow": "Fresh",
-        "title": "New in",
-        "text": "",
-        "collection": "new-in",
-        "limit": 12,
-        "columns": 4,
-        "button_label": "Shop new in"
-      }
-    },
-    "trust": {
-      "type": "trust-badges",
-      "blocks": {
         "t1": {
-          "type": "badge",
+          "type": "text",
           "settings": {
-            "icon": "truck",
-            "title": "Free shipping",
-            "text": "On orders over $90"
+            "text": "Polka dot season"
           }
         },
         "t2": {
-          "type": "badge",
+          "type": "text",
           "settings": {
-            "icon": "return",
-            "title": "Easy returns",
-            "text": "30-day hassle free"
+            "text": "Heavenly made"
           }
         },
         "t3": {
-          "type": "badge",
+          "type": "text",
           "settings": {
-            "icon": "sparkle",
-            "title": "New every week",
-            "text": "Fresh drops you'll love"
+            "text": "Frilly & dreamy"
           }
         },
         "t4": {
-          "type": "badge",
+          "type": "text",
           "settings": {
-            "icon": "chat",
-            "title": "Here to help",
-            "text": "Sweet support, always"
+            "text": "Coquette forever"
           }
         }
       },
@@ -187,34 +61,155 @@
         "t4"
       ],
       "settings": {
-        "bg": "#fce9ee"
+        "style": "polka"
       }
     },
-    "testimonials": {
+    "new_in": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just landed",
+        "title": "New in",
+        "text": "",
+        "layout": "carousel",
+        "limit": 10,
+        "columns": 4,
+        "button_label": "Shop all new"
+      }
+    },
+    "moods": {
+      "type": "shop-by-mood",
+      "blocks": {
+        "mood1": {
+          "type": "mood",
+          "settings": {
+            "title": "Polka dot dreams",
+            "subtitle": "Dotty dresses, sets & halters",
+            "cta": "Shop the mood",
+            "style": "polka",
+            "product": "vintage-inspired-polka-dot-mini-dress"
+          }
+        },
+        "mood2": {
+          "type": "mood",
+          "settings": {
+            "title": "Soft & sweet",
+            "subtitle": "Bows, lace & pastel knits",
+            "cta": "Shop the mood",
+            "style": "pink",
+            "product": "sweetheart-pink-bow-peplum-top-lace-trim-mini-skirt-set"
+          }
+        },
+        "mood3": {
+          "type": "mood",
+          "settings": {
+            "title": "Princess steps",
+            "subtitle": "Platforms, boots & ribbons",
+            "cta": "Shop the mood",
+            "style": "cream",
+            "product": "adorable-princess-bow-detailed-knee-high-boots"
+          }
+        }
+      },
+      "block_order": [
+        "mood1",
+        "mood2",
+        "mood3"
+      ],
+      "settings": {
+        "background": "polka",
+        "eyebrow": "Find your vibe",
+        "title": "Shop by mood",
+        "text": "",
+        "columns": 3
+      }
+    },
+    "best_sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Most loved",
+        "title": "Best sellers",
+        "text": "",
+        "layout": "grid",
+        "limit": 8,
+        "columns": 4,
+        "button_label": "Shop best sellers"
+      }
+    },
+    "divider": {
+      "type": "dot-divider",
+      "settings": {
+        "shape": "scallop",
+        "bg": "#FCE9EE",
+        "dot": "#FFFFFF",
+        "height": 36
+      }
+    },
+    "look": {
+      "type": "complete-the-look",
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "product": "sweetheart-pink-polka-dot-halter-top-mini-skirt-set"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "product": "dreamy-princess-pink-high-heel-platforms"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "product": "vintage-inspired-rose-garden-3d-applique-knit-cardigan"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "background": "soft",
+        "sticker": "The dotty edit",
+        "reverse": false,
+        "eyebrow": "Complete the look",
+        "title": "Date night in dots",
+        "text": "Pick your size and add each piece straight to your bag.",
+        "button_label": "Shop all outfits",
+        "button_link": "shopify://collections/all"
+      }
+    },
+    "reviews": {
       "type": "testimonials",
       "blocks": {
         "r1": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "Obsessed! The fit is so flattering and the fabric feels like a dream.",
-            "author": "Sofia R."
+            "author": "Sofia R.",
+            "quote": "The polka dot set is even cuter in person — the fabric is so soft and it fits like a dream.",
+            "product": "sweetheart-pink-polka-dot-halter-top-mini-skirt-set"
           }
         },
         "r2": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "Fast shipping and everything is even cuter in person. My new favourite shop.",
-            "author": "Maya L."
+            "author": "Maya L.",
+            "quote": "Fast shipping and everything came wrapped so prettily. My new favourite shop!",
+            "product": "vintage-inspired-polka-dot-mini-dress"
           }
         },
         "r3": {
           "type": "review",
           "settings": {
             "rating": 5,
-            "quote": "The vibe is exactly what I wanted for my soft girl wardrobe. 10/10.",
-            "author": "Chloe T."
+            "author": "Chloe T.",
+            "quote": "Exactly the coquette vibe I wanted. I've had so many compliments on these boots.",
+            "product": "adorable-princess-bow-detailed-knee-high-boots"
           }
         }
       },
@@ -224,77 +219,82 @@
         "r3"
       ],
       "settings": {
+        "background": "polka",
         "eyebrow": "Loved by you",
         "title": "The girls have spoken",
+        "show_summary": true,
+        "rating_avg": "4.9",
+        "review_count": "1,200+",
         "columns": 3
+      }
+    },
+    "trust": {
+      "type": "trust-badges",
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Free UK shipping",
+            "text": "On orders over £60"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "icon": "return",
+            "title": "Easy returns",
+            "text": "30-day hassle free"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "icon": "sparkle",
+            "title": "New every week",
+            "text": "Fresh drops you'll love"
+          }
+        },
+        "b4": {
+          "type": "badge",
+          "settings": {
+            "icon": "heart",
+            "title": "Wrapped with love",
+            "text": "Every order, every time"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "bg": "#FCE9EE"
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
+        "style": "polka",
         "eyebrow": "VIP list",
         "title": "Get 10% off your first order",
-        "text": "Join for early access to drops, secret sales and soft girl inspo.",
+        "text": "Join for early access to polka dot drops, secret sales and soft girl inspo.",
         "note": "No spam, just cute stuff. Unsubscribe anytime."
       }
-    },
-    "178471344176a8efe1": {
-      "type": "apps",
-      "settings": {}
-    },
-    "178471345380b6bbfb": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_cards_carousel_dwfFeY": {
-          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "show_sample_reviews": true,
-            "reviews_selection": "all",
-            "products": [],
-            "star_rating": "all",
-            "show_review_media": true,
-            "display_order": "media_first",
-            "no_image_fallback": "review_text_only",
-            "max_reviews": 20,
-            "review_length": "medium",
-            "text_size": "medium",
-            "image_ratio": "1",
-            "reviews_shown": 4,
-            "show_reviewer_name": true,
-            "show_product_name": true,
-            "hide_arrows_mobile": true,
-            "arrows_position": "sides",
-            "max_width": 1100,
-            "corner_styling": "soft",
-            "header_text_color": "#000000",
-            "text_color": "#000000",
-            "card_color": "#F9F9F9",
-            "stars_color": "",
-            "arrows_color": "#000000",
-            "transition_speed": 5,
-            "header_text": "Customers are saying",
-            "show_average_rating": true,
-            "rating_display": "default"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_cards_carousel_dwfFeY"
-      ],
-      "settings": {}
     }
   },
   "order": [
     "hero",
     "marquee",
-    "categories",
-    "bestsellers",
-    "image_text",
-    "newin",
+    "new_in",
+    "moods",
+    "best_sellers",
+    "divider",
+    "look",
+    "reviews",
     "trust",
-    "testimonials",
-    "newsletter",
-    "178471344176a8efe1",
-    "178471345380b6bbfb"
+    "newsletter"
   ]
 }
