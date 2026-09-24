@@ -1,24 +1,42 @@
+{%- liquid
+  assign has_video = false
+  if section.settings.video != blank or section.settings.video_url != blank
+    assign has_video = true
+  endif
+-%}
 <div class="hero hero--{{ section.settings.height }}">
   <div class="hero__media">
-    {%- if section.settings.image != blank -%}
-      <img src="{{ section.settings.image | image_url: width: 2000 }}"
-           srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 2000 }} 2000w"
-           sizes="100vw" alt="{{ section.settings.image.alt | escape }}" fetchpriority="high" width="2000" height="1200">
+    {%- if section.settings.video != blank -%}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '2000x', class: 'hero__video' }}
+    {%- elsif section.settings.video_url != blank -%}
+      <video class="hero__video" autoplay loop muted playsinline preload="metadata"
+        {% if section.settings.image != blank %}poster="{{ section.settings.image | image_url: width: 2000 }}"{% endif %}>
+        <source src="{{ section.settings.video_url }}" type="video/mp4">
+      </video>
+    {%- elsif section.settings.image != blank -%}
+      <picture>
+        {%- if section.settings.image_mobile != blank -%}
+          <source media="(max-width: 749px)" srcset="{{ section.settings.image_mobile | image_url: width: 750 }} 750w, {{ section.settings.image_mobile | image_url: width: 1100 }} 1100w" sizes="100vw">
+        {%- endif -%}
+        <img src="{{ section.settings.image | image_url: width: 2000 }}"
+             srcset="{{ section.settings.image | image_url: width: 800 }} 800w, {{ section.settings.image | image_url: width: 1400 }} 1400w, {{ section.settings.image | image_url: width: 2000 }} 2000w, {{ section.settings.image | image_url: width: 2800 }} 2800w"
+             sizes="100vw" alt="{{ section.settings.image.alt | escape }}" fetchpriority="high" width="2000" height="1200">
+      </picture>
     {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag }}
+      <div class="hero__placeholder polka--pink"></div>
     {%- endif -%}
     <div class="hero__overlay" style="opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
   </div>
-  <div class="page-width hero__content hero__content--{{ section.settings.alignment }} {% if section.settings.dark_text %}hero__content--dark{% endif %}">
+  <div class="page-width hero__content hero__content--{{ section.settings.alignment }} hero__content--v-{{ section.settings.v_align }} {% if section.settings.dark_text %}hero__content--dark{% endif %}">
     {%- if section.settings.eyebrow != blank -%}<span class="hero__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
     {%- if section.settings.title != blank -%}<h1 class="hero__title">{{ section.settings.title }}</h1>{%- endif -%}
     {%- if section.settings.text != blank -%}<p class="hero__text">{{ section.settings.text }}</p>{%- endif -%}
     <div class="hero__buttons">
       {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="btn btn--accent">{{ section.settings.button_label }}</a>
       {%- endif -%}
       {%- if section.settings.button2_label != blank -%}
-        <a href="{{ section.settings.button2_link }}" class="btn btn--secondary" style="color:#fff;border-color:#fff;">{{ section.settings.button2_label }}</a>
+        <a href="{{ section.settings.button2_link | default: routes.collections_url }}" class="btn btn--secondary{% unless section.settings.dark_text %} btn--on-dark{% endunless %}">{{ section.settings.button2_label }}</a>
       {%- endif -%}
     </div>
   </div>
@@ -28,11 +46,17 @@
 {
   "name": "Hero banner",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "header", "content": "Media" },
+    { "type": "video", "id": "video", "label": "Background video", "info": "Plays muted on loop. Overrides the image." },
+    { "type": "url", "id": "video_url", "label": "…or video URL (.mp4)" },
+    { "type": "image_picker", "id": "image", "label": "Background image", "info": "Also used as the video poster." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image (optional)" },
     { "type": "select", "id": "height", "label": "Height", "options": [ {"value":"medium","label":"Medium"}, {"value":"full","label":"Full"} ], "default": "full" },
     { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 80, "step": 5, "unit": "%", "default": 25 },
+    { "type": "header", "content": "Content" },
     { "type": "checkbox", "id": "dark_text", "label": "Dark text (for light images)", "default": false },
-    { "type": "select", "id": "alignment", "label": "Content alignment", "options": [ {"value":"left","label":"Left"}, {"value":"center","label":"Center"}, {"value":"right","label":"Right"} ], "default": "center" },
+    { "type": "select", "id": "alignment", "label": "Horizontal alignment", "options": [ {"value":"left","label":"Left"}, {"value":"center","label":"Center"}, {"value":"right","label":"Right"} ], "default": "center" },
+    { "type": "select", "id": "v_align", "label": "Vertical alignment", "options": [ {"value":"top","label":"Top"}, {"value":"center","label":"Middle"}, {"value":"bottom","label":"Bottom"} ], "default": "center" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New Season" },
     { "type": "text", "id": "title", "label": "Heading", "default": "Soft girl era starts here" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "Dreamy fits, coquette details and everyday cute — curated for your main character moment." },

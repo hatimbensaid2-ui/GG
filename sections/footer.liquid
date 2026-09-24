@@ -3,37 +3,35 @@
     <div class="footer__top">
       <div class="footer__brand">
         {%- if section.settings.logo != blank -%}
-          <img src="{{ section.settings.logo | image_url: width: 240 }}" alt="{{ shop.name }}" width="140" style="filter:brightness(0) invert(1);margin-bottom:1rem;">
+          <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" loading="lazy" width="{{ section.settings.logo_width }}" height="{{ section.settings.logo_width | divided_by: section.settings.logo.aspect_ratio | round }}" style="width:{{ section.settings.logo_width }}px;margin-bottom:.8rem;">
         {%- else -%}
           <p class="footer__brand-name">{{ shop.name }}</p>
         {%- endif -%}
-        {%- if section.settings.tagline != blank -%}
-          <p class="footer__brand-text">{{ section.settings.tagline }}</p>
-        {%- endif -%}
+        {%- if section.settings.brand_text != blank -%}<div class="footer__brand-text">{{ section.settings.brand_text }}</div>{%- endif -%}
         {% render 'social-icons' %}
       </div>
 
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'menu' -%}
-            <div class="footer__col footer__col--menu" {{ block.shopify_attributes }}>
-              <div class="footer__col-title">{{ block.settings.heading }}</div>
-              <ul class="footer__list">
-                {%- for link in block.settings.menu.links -%}
-                  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-                {%- endfor -%}
-              </ul>
+            <div class="footer__col" {{ block.shopify_attributes }}>
+              <div class="footer__col-title">{{ block.settings.title | default: block.settings.menu.title }}</div>
+              {%- if block.settings.menu != blank -%}
+                <ul class="footer__list">
+                  {%- for link in block.settings.menu.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
+                </ul>
+              {%- endif -%}
             </div>
           {%- when 'newsletter' -%}
-            <div class="footer__col footer__col--news" {{ block.shopify_attributes }}>
-              <div class="footer__col-title">{{ block.settings.heading }}</div>
-              <p class="footer__brand-text" style="margin-bottom:1rem;">{{ block.settings.text }}</p>
-              {%- form 'customer', class: 'footer__newsletter' -%}
+            <div class="footer__col footer__col--news footer__newsletter" {{ block.shopify_attributes }}>
+              <div class="footer__col-title">{{ block.settings.title }}</div>
+              {%- if block.settings.text != blank -%}<p style="font-size:.9rem;opacity:.85;">{{ block.settings.text }}</p>{%- endif -%}
+              {%- form 'customer', id: 'FooterNewsletter' -%}
                 <input type="hidden" name="contact[tags]" value="newsletter">
                 {%- if form.posted_successfully? -%}
-                  <p>{{ 'general.newsletter.success' | t }}</p>
+                  <p class="newsletter__success">{{ 'general.newsletter.success' | t }}</p>
                 {%- else -%}
-                  <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" required>
+                  <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" aria-label="Email" required>
                   <button type="submit" class="btn btn--accent btn--full">{{ 'general.newsletter.button' | t }}</button>
                 {%- endif -%}
               {%- endform -%}
@@ -43,12 +41,21 @@
     </div>
 
     <div class="footer__bottom">
-      <div>© {{ 'now' | date: '%Y' }} {{ shop.name }} — {{ 'general.footer.rights' | t }}</div>
-      {%- if section.settings.show_payment and shop.enabled_payment_types.size > 0 -%}
+      <div>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}{% if section.settings.copyright != blank %} · {{ section.settings.copyright }}{% endif %}</div>
+
+      {%- if section.settings.show_localization and localization.available_countries.size > 1 -%}
+        {%- form 'localization', class: 'footer__localization' -%}
+          <select name="country_code" onchange="this.form.submit()" aria-label="{{ 'general.localization.country' | t }}" style="background:transparent;color:inherit;border:1px solid rgba(255,248,245,.4);border-radius:999px;padding:.4rem .8rem;font-family:inherit;">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %} style="color:#3A2A2F;">{{ country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})</option>
+            {%- endfor -%}
+          </select>
+        {%- endform -%}
+      {%- endif -%}
+
+      {%- if section.settings.show_payment -%}
         <div class="footer__payment">
-          {%- for type in shop.enabled_payment_types -%}
-            {{ type | payment_type_svg_tag: class: 'payment-icon' }}
-          {%- endfor -%}
+          {%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'payment-icon' }}{%- endfor -%}
         </div>
       {%- endif -%}
     </div>
@@ -60,15 +67,18 @@
   "name": "Footer",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo" },
-    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Soft looks for the main character. Curated drops, dreamy fits, delivered worldwide." },
-    { "type": "checkbox", "id": "show_payment", "label": "Show payment icons", "default": true }
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 60, "max": 300, "step": 10, "unit": "px", "default": 150 },
+    { "type": "richtext", "id": "brand_text", "label": "Brand text", "default": "<p>Heavenly made, dreamy & frilly fashion for your soft girl era. Coquette, dollette & ballet-core pieces you'll want to live in.</p>" },
+    { "type": "checkbox", "id": "show_localization", "label": "Show country/currency selector", "default": true },
+    { "type": "checkbox", "id": "show_payment", "label": "Show payment icons", "default": true },
+    { "type": "text", "id": "copyright", "label": "Extra copyright text" }
   ],
   "blocks": [
     {
       "type": "menu",
-      "name": "Menu column",
+      "name": "Menu",
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "text", "id": "title", "label": "Heading" },
         { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
       ]
     },
@@ -77,17 +87,11 @@
       "name": "Newsletter",
       "limit": 1,
       "settings": [
-        { "type": "text", "id": "heading", "label": "Heading", "default": "Join the club" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Get 10% off your first order plus early access to drops." }
+        { "type": "text", "id": "title", "label": "Heading", "default": "Join the club" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Early access to drops & 10% off your first order." }
       ]
     }
   ],
-  "default": {
-    "blocks": [
-      { "type": "menu", "settings": { "heading": "Shop" } },
-      { "type": "menu", "settings": { "heading": "Help" } },
-      { "type": "newsletter" }
-    ]
-  }
+  "max_blocks": 4
 }
 {% endschema %}
