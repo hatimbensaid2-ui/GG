@@ -24,13 +24,15 @@
         "m2": {
           "type": "message",
           "settings": {
-            "text": "Free UK shipping over £60 🎀"
+            "text": "Free UK shipping over £60 🎀",
+            "link": ""
           }
         },
         "m3": {
           "type": "message",
           "settings": {
-            "text": "New drops every Friday — join the club"
+            "text": "New drops every Friday — join the club",
+            "link": ""
           }
         }
       },
@@ -41,15 +43,16 @@
       ],
       "settings": {
         "scrolling": true,
-        "bg": "#C25C7A",
-        "text_color": "#FFFFFF"
+        "bg": "#c25c7a",
+        "text_color": "#ffffff"
       }
     },
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu",
-        "logo_width": 160
+        "logo": "shopify://shop_images/logo_transparent-01.png",
+        "logo_width": 160,
+        "menu": "main-menu"
       }
     }
   },
