@@ -28,42 +28,17 @@
         "button2_link": "shopify://collections/all"
       }
     },
-    "marquee": {
-      "type": "marquee",
-      "blocks": {
-        "t1": {
-          "type": "text",
-          "settings": {
-            "text": "Polka dot season"
-          }
-        },
-        "t2": {
-          "type": "text",
-          "settings": {
-            "text": "Heavenly made"
-          }
-        },
-        "t3": {
-          "type": "text",
-          "settings": {
-            "text": "Frilly & dreamy"
-          }
-        },
-        "t4": {
-          "type": "text",
-          "settings": {
-            "text": "Coquette forever"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ],
+    "best_sellers": {
+      "type": "featured-collection",
       "settings": {
-        "style": "polka"
+        "eyebrow": "Most loved",
+        "title": "Best sellers",
+        "text": "",
+        "collection": "",
+        "layout": "grid",
+        "limit": 8,
+        "columns": 4,
+        "button_label": "Shop best sellers"
       }
     },
     "new_in": {
@@ -77,72 +52,6 @@
         "limit": 10,
         "columns": 4,
         "button_label": "Shop all new"
-      }
-    },
-    "moods": {
-      "type": "shop-by-mood",
-      "blocks": {
-        "mood1": {
-          "type": "mood",
-          "settings": {
-            "collection": "",
-            "link": "",
-            "product": "vintage-inspired-polka-dot-mini-dress",
-            "title": "Polka dot dreams",
-            "subtitle": "Dotty dresses, sets & halters",
-            "cta": "Shop the mood",
-            "style": "polka"
-          }
-        },
-        "mood2": {
-          "type": "mood",
-          "settings": {
-            "collection": "",
-            "link": "",
-            "product": "sweetheart-pink-bow-peplum-top-lace-trim-mini-skirt-set",
-            "title": "Soft & sweet",
-            "subtitle": "Bows, lace & pastel knits",
-            "cta": "Shop the mood",
-            "style": "pink"
-          }
-        },
-        "mood3": {
-          "type": "mood",
-          "settings": {
-            "collection": "",
-            "link": "",
-            "product": "adorable-princess-bow-detailed-knee-high-boots",
-            "title": "Princess steps",
-            "subtitle": "Platforms, boots & ribbons",
-            "cta": "Shop the mood",
-            "style": "cream"
-          }
-        }
-      },
-      "block_order": [
-        "mood1",
-        "mood2",
-        "mood3"
-      ],
-      "settings": {
-        "background": "polka",
-        "eyebrow": "Find your vibe",
-        "title": "Shop by mood",
-        "text": "",
-        "columns": 3
-      }
-    },
-    "best_sellers": {
-      "type": "featured-collection",
-      "settings": {
-        "eyebrow": "Most loved",
-        "title": "Best sellers",
-        "text": "",
-        "collection": "",
-        "layout": "grid",
-        "limit": 8,
-        "columns": 4,
-        "button_label": "Shop best sellers"
       }
     },
     "divider": {
@@ -297,12 +206,10 @@
   },
   "order": [
     "hero",
-    "marquee",
-    "new_in",
-    "moods",
     "best_sellers",
     "divider",
     "look",
+    "new_in",
     "reviews",
     "trust",
     "newsletter"
