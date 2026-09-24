@@ -1,75 +1,46 @@
 <div class="section">
   <div class="page-width page-width--narrow">
-    <h1 style="text-align:center;">{{ 'sections.cart.title' | t }}</h1>
-
+    <div class="page-hero"><h1>{{ 'sections.cart.title' | t }}</h1></div>
     {%- if cart.item_count > 0 -%}
-      <form action="{{ routes.cart_url }}" method="post" novalidate>
-        <div style="margin-top:2rem;">
-          {%- for item in cart.items -%}
-            <div class="cart-item" style="grid-template-columns:90px 1fr auto;">
-              <a class="cart-item__img" href="{{ item.url }}">
-                {%- if item.image -%}<img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.image.alt | escape }}" width="90">{%- endif -%}
-              </a>
-              <div>
-                <a href="{{ item.url }}"><h3 class="cart-item__title">{{ item.product.title }}</h3></a>
-                {%- unless item.variant.title == 'Default Title' -%}<div class="cart-item__variant">{{ item.variant.title }}</div>{%- endunless -%}
-                {%- for allocation in item.line_level_discount_allocations -%}
-                  <div class="cart-item__discount">{{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})</div>
-                {%- endfor -%}
-                {%- assign down_qty = item.quantity | minus: 1 -%}
-                {%- assign up_qty = item.quantity | plus: 1 -%}
-                <div class="cart-item__qty">
-                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ down_qty }}" aria-label="Decrease">&minus;</a>
-                  <span>{{ item.quantity }}</span>
-                  <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ up_qty }}" aria-label="Increase">+</a>
-                </div>
-                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" class="cart-item__remove">{{ 'sections.cart.remove' | t }}</a>
+      <form action="{{ routes.cart_url }}" method="post">
+        {%- for item in cart.items -%}
+          <div class="cart-item">
+            <a class="cart-item__img" href="{{ item.url }}">{%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}" loading="lazy" width="200" height="266">{%- endif -%}</a>
+            <div>
+              <a href="{{ item.url }}"><h4 class="cart-item__title">{{ item.product.title }}</h4></a>
+              {%- unless item.product.has_only_default_variant -%}<div class="cart-item__variant">{{ item.variant.title }}</div>{%- endunless -%}
+              {%- for d in item.line_level_discount_allocations -%}<div class="cart-item__discount">{{ d.discount_application.title }} (−{{ d.amount | money }})</div>{%- endfor -%}
+              <div class="cart-item__qty">
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | minus: 1 }}" aria-label="-">&minus;</a>
+                <span>{{ item.quantity }}</span>
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity={{ item.quantity | plus: 1 }}" aria-label="+">+</a>
               </div>
-              <div class="cart-item__price">
-                {%- if item.original_line_price > item.final_line_price -%}
-                  <span class="cart-item__price-was">{{ item.original_line_price | money }}</span>
-                  <span class="cart-item__price-now">{{ item.final_line_price | money }}</span>
-                {%- else -%}
-                  {{ item.final_line_price | money }}
-                {%- endif -%}
-              </div>
+              <a href="{{ item.url_to_remove }}" class="cart-item__remove" style="display:block;">{{ 'sections.cart.remove' | t }}</a>
             </div>
-          {%- endfor -%}
-        </div>
+            <div class="cart-item__price">
+              {%- if item.original_line_price > item.final_line_price -%}
+                <span class="cart-item__price-was">{{ item.original_line_price | money }}</span><span class="cart-item__price-now">{{ item.final_line_price | money }}</span>
+              {%- else -%}{{ item.final_line_price | money }}{%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
 
         <div style="margin-top:2rem;text-align:right;">
-          <form class="cart-discount" data-discount-form style="max-width:340px;margin-left:auto;">
-            <input type="text" name="discount" class="cart-discount__input" placeholder="{{ 'sections.cart.discount_placeholder' | t }}" autocomplete="off">
-            <button type="submit" class="cart-discount__btn">{{ 'sections.cart.apply' | t }}</button>
-          </form>
-          {%- if cart.cart_level_discount_applications.size > 0 or cart.total_discount > 0 -%}
-            <div class="cart-page__discounts">
-              {%- for discount in cart.cart_level_discount_applications -%}
-                <div class="cart-drawer__discount-row" style="justify-content:flex-end;gap:2rem;">
-                  <span>{{ discount.title }}</span>
-                  <span>&minus;{{ discount.total_allocated_amount | money }}</span>
-                </div>
-              {%- endfor -%}
-              {%- if cart.total_discount > 0 -%}
-                <div class="cart-drawer__discount-row cart-drawer__discount-row--total" style="justify-content:flex-end;gap:2rem;">
-                  <span>{{ 'sections.cart.you_saved' | t }}</span>
-                  <span>&minus;{{ cart.total_discount | money }}</span>
-                </div>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-          <div class="cart-drawer__subtotal" style="justify-content:flex-end;gap:2rem;font-size:1.2rem;margin-top:.6rem;">
-            <span>{{ 'sections.cart.subtotal' | t }}</span>
-            <span>{{ cart.total_price | money }}</span>
+          <div class="cart-page__discounts">
+            {%- for d in cart.cart_level_discount_applications -%}
+              <div class="cart-drawer__discount-row" style="gap:1rem;"><span>{{ d.title }}</span><span>−{{ d.total_allocated_amount | money }}</span></div>
+            {%- endfor -%}
           </div>
+          <p style="font-weight:700;font-size:1.2rem;margin-bottom:.3rem;">{{ 'sections.cart.subtotal' | t }}: {{ cart.total_price | money_with_currency }}</p>
           <p class="cart-drawer__tax">{{ 'sections.cart.taxes_note' | t }}</p>
-          <button type="submit" name="checkout" class="btn" style="margin-top:1rem;">{{ 'sections.cart.checkout' | t }}</button>
+          <textarea name="note" placeholder="Add a note to your order" style="width:100%;max-width:420px;border:1.5px solid var(--color-border);border-radius:var(--radius);padding:.8rem 1rem;font-family:inherit;margin-bottom:1rem;">{{ cart.note }}</textarea>
+          <div><button type="submit" name="checkout" class="btn">{{ 'sections.cart.checkout' | t }}</button></div>
         </div>
       </form>
     {%- else -%}
-      <div style="text-align:center;padding:3rem 0;">
+      <div class="cart-drawer__empty">
         <p>{{ 'sections.cart.empty' | t }}</p>
-        <a href="{{ routes.all_products_collection_url }}" class="btn btn--accent">{{ 'general.shop_now' | t }}</a>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--accent">{{ 'sections.cart.continue' | t }}</a>
       </div>
     {%- endif -%}
   </div>

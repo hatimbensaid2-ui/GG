@@ -1,8 +1,13 @@
-<div class="section" style="text-align:center;padding-block:6rem;">
-  <div class="page-width page-width--narrow">
-    <h1 style="font-size:clamp(3rem,10vw,6rem);">404</h1>
-    <p>{{ 'general.404.title' | t }}</p>
-    <a href="{{ routes.root_url }}" class="btn btn--accent" style="margin-top:1rem;">{{ 'general.404.link' | t }}</a>
+<div class="section section--bg-polka">
+  <div class="page-width page-width--narrow" style="text-align:center;">
+    <div class="newsletter newsletter--polka" style="padding:0;background:none;">
+      <div class="newsletter__inner">
+        <p style="font-family:var(--font-heading);font-size:4rem;line-height:1;margin:0 0 .5rem;color:var(--color-accent-dark);">404</p>
+        <h1>{{ 'general.404.title' | t }}</h1>
+        <p>{{ 'general.404.subtext' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'general.404.link' | t }}</a>
+      </div>
+    </div>
   </div>
 </div>
 

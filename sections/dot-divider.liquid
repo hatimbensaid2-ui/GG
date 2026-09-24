@@ -1,0 +1,15 @@
+{%- comment -%} Decorative polka-dot divider with scalloped edge {%- endcomment -%}
+<div class="dot-divider dot-divider--{{ section.settings.shape }}" style="--dot-divider-bg: {{ section.settings.bg }}; --dot-divider-dot: {{ section.settings.dot }}; height: {{ section.settings.height }}px;" aria-hidden="true"></div>
+
+{% schema %}
+{
+  "name": "Polka dot divider",
+  "settings": [
+    { "type": "select", "id": "shape", "label": "Edge", "options": [ { "value": "scallop", "label": "Scalloped" }, { "value": "flat", "label": "Flat" } ], "default": "scallop" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#F7C8D5" },
+    { "type": "color", "id": "dot", "label": "Dot colour", "default": "#FFFFFF" },
+    { "type": "range", "id": "height", "label": "Height", "min": 16, "max": 120, "step": 4, "unit": "px", "default": 48 }
+  ],
+  "presets": [ { "name": "Polka dot divider" } ]
+}
+{% endschema %}

@@ -1,19 +1,21 @@
 <div class="section">
   <div class="page-width page-width--narrow">
-    <div class="newsletter">
-      {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.title != blank -%}<h2>{{ section.settings.title }}</h2>{%- endif -%}
-      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
-      {%- form 'customer', class: 'newsletter__form' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        {%- if form.posted_successfully? -%}
-          <p class="newsletter__success">{{ 'general.newsletter.success' | t }}</p>
-        {%- else -%}
-          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" aria-label="Email" required>
-          <button type="submit" class="btn">{{ 'general.newsletter.button' | t }}</button>
-        {%- endif -%}
-      {%- endform -%}
-      {%- if section.settings.note != blank -%}<p class="newsletter__note">{{ section.settings.note }}</p>{%- endif -%}
+    <div class="newsletter newsletter--{{ section.settings.style }}">
+      <div class="newsletter__inner">
+        {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.title != blank -%}<h2>{{ section.settings.title }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+        {%- form 'customer', class: 'newsletter__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="newsletter__success">{{ 'general.newsletter.success' | t }}</p>
+          {%- else -%}
+            <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.placeholder' | t }}" aria-label="Email" required>
+            <button type="submit" class="btn">{{ 'general.newsletter.button' | t }}</button>
+          {%- endif -%}
+        {%- endform -%}
+        {%- if section.settings.note != blank -%}<p class="newsletter__note">{{ section.settings.note }}</p>{%- endif -%}
+      </div>
     </div>
   </div>
 </div>
@@ -22,6 +24,7 @@
 {
   "name": "Newsletter",
   "settings": [
+    { "type": "select", "id": "style", "label": "Card style", "options": [ { "value": "polka", "label": "Polka dots" }, { "value": "pink", "label": "Pink" } ], "default": "polka" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "VIP list" },
     { "type": "text", "id": "title", "label": "Heading", "default": "Get 10% off your first order" },
     { "type": "text", "id": "text", "label": "Text", "default": "Join for early access to drops, secret sales and soft girl inspo." },
