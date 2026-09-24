@@ -1,30 +1,39 @@
 <div class="section" style="--cols: {{ section.settings.columns }};">
   <div class="page-width">
-    <div class="section-header">
-      {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.title != blank -%}<h2 class="section-header__title">{{ section.settings.title }}</h2>{%- endif -%}
-      {%- if section.settings.text != blank -%}<p class="section-header__text">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="section-header{% if section.settings.button_label != blank %} section-header--split{% endif %}">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        {%- if section.settings.title != blank -%}<h2 class="section-header__title">{{ section.settings.title }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p class="section-header__text">{{ section.settings.text }}</p>{%- endif -%}
+      </div>
+      {%- assign collection = section.settings.collection -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{% if collection != blank %}{{ collection.url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}" class="link-underline">{{ section.settings.button_label }}</a>
+      {%- endif -%}
     </div>
 
-    {%- assign collection = collections[section.settings.collection] -%}
-    <div class="product-grid">
+    <div class="{% if section.settings.layout == 'carousel' %}product-carousel{% else %}product-grid{% endif %}" data-carousel>
       {%- if collection != blank and collection.products.size > 0 -%}
         {%- for product in collection.products limit: section.settings.limit -%}
           {% render 'product-card', product: product %}
         {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..section.settings.limit) -%}
-          <div class="product-card">
-            <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag }}</div>
-            <div class="product-card__info"><h3 class="product-card__title">Product title</h3><div class="price"><span>$00.00</span></div></div>
-          </div>
+      {%- elsif section.settings.collection == blank -%}
+        {%- for product in collections.all.products limit: section.settings.limit -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <div class="product-card">
+              <div class="product-card__media">{{ 'product-1' | placeholder_svg_tag }}</div>
+              <div class="product-card__info"><h3 class="product-card__title">Product title</h3><div class="price"><span>£00.00</span></div></div>
+            </div>
+          {%- endfor -%}
         {%- endfor -%}
       {%- endif -%}
     </div>
-
-    {%- if section.settings.button_label != blank and collection != blank -%}
-      <div style="text-align:center;margin-top:1.25rem;">
-        <a href="{{ collection.url }}" class="btn btn--secondary">{{ section.settings.button_label }}</a>
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="carousel-nav">
+        <button type="button" class="carousel-nav__btn carousel-nav__btn--prev" data-carousel-prev aria-label="{{ 'accessibility.previous' | t }}">{% render 'icon-chevron' %}</button>
+        <button type="button" class="carousel-nav__btn carousel-nav__btn--next" data-carousel-next aria-label="{{ 'accessibility.next' | t }}">{% render 'icon-chevron' %}</button>
       </div>
     {%- endif -%}
   </div>
@@ -37,10 +46,11 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Trending" },
     { "type": "text", "id": "title", "label": "Heading", "default": "Best sellers" },
     { "type": "text", "id": "text", "label": "Subtext" },
-    { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 8 },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "Leave empty to show your latest products." },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [ { "value": "grid", "label": "Grid" }, { "value": "carousel", "label": "Carousel (swipe)" } ], "default": "grid" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 16, "step": 1, "default": 8 },
     { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 5, "step": 1, "default": 4 },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop all" }
+    { "type": "text", "id": "button_label", "label": "Link label", "default": "Shop all" }
   ],
   "presets": [ { "name": "Featured collection" } ]
 }

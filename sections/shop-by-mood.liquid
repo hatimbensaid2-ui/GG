@@ -1,0 +1,74 @@
+{%- comment -%} Shop by mood — curated collection tiles {%- endcomment -%}
+<div class="section section--bg-{{ section.settings.background }}" style="--cols: {{ section.settings.columns }};">
+  <div class="page-width">
+    <div class="section-header">
+      {%- if section.settings.eyebrow != blank -%}<span class="section-header__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h2 class="section-header__title">{{ section.settings.title }}</h2>{%- endif -%}
+      {%- if section.settings.text != blank -%}<p class="section-header__text">{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="mood-tiles">
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- assign url = block.settings.link | default: c.url | default: routes.collections_url -%}
+        <a href="{{ url }}" class="mood-tile mood-tile--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+          <div class="mood-tile__media">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 800 }}" srcset="{{ block.settings.image | image_url: width: 400 }} 400w, {{ block.settings.image | image_url: width: 800 }} 800w" sizes="(max-width: 749px) 70vw, 33vw" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="1066">
+            {%- elsif block.settings.product != blank and block.settings.product.featured_image -%}
+              <img src="{{ block.settings.product.featured_image | image_url: width: 800 }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="1066">
+            {%- elsif c.featured_image -%}
+              <img src="{{ c.featured_image | image_url: width: 800 }}" alt="{{ c.title | escape }}" loading="lazy" width="800" height="1066">
+            {%- else -%}
+              <div class="polka--pink" style="width:100%;height:100%;"></div>
+            {%- endif -%}
+          </div>
+          <div class="mood-tile__label">
+            <span class="mood-tile__title">{{ block.settings.title | default: c.title }}</span>
+            {%- if block.settings.subtitle != blank -%}<span class="mood-tile__sub">{{ block.settings.subtitle }}</span>{%- endif -%}
+            <span class="mood-tile__cta">{{ block.settings.cta }} →</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop by mood",
+  "settings": [
+    { "type": "select", "id": "background", "label": "Background", "options": [ { "value": "none", "label": "Plain" }, { "value": "polka", "label": "Polka dots" }, { "value": "soft", "label": "Soft pink" } ], "default": "polka" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Find your vibe" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by mood" },
+    { "type": "text", "id": "text", "label": "Subtext" },
+    { "type": "range", "id": "columns", "label": "Columns (desktop)", "min": 2, "max": 4, "step": 1, "default": 3 }
+  ],
+  "blocks": [
+    {
+      "type": "mood",
+      "name": "Mood",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "link", "label": "Custom link (optional)" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "product", "id": "product", "label": "…or use this product's photo" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Polka dot dreams" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Dotty dresses, bows & blouses" },
+        { "type": "text", "id": "cta", "label": "Link text", "default": "Shop the mood" },
+        { "type": "select", "id": "style", "label": "Label style", "options": [ { "value": "polka", "label": "Polka dot" }, { "value": "pink", "label": "Pink" }, { "value": "cream", "label": "Cream" } ], "default": "polka" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Shop by mood",
+      "blocks": [
+        { "type": "mood", "settings": { "title": "Polka dot dreams", "subtitle": "Dotty dresses, bows & blouses", "style": "polka" } },
+        { "type": "mood", "settings": { "title": "Soft & sweet", "subtitle": "Lace, ruffles & pastel knits", "style": "pink" } },
+        { "type": "mood", "settings": { "title": "Princess steps", "subtitle": "Platforms, boots & bows", "style": "cream" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
