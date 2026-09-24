@@ -12,6 +12,8 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
+        "video_url": "",
+        "image": "shopify://shop_images/IMG_3991.png",
         "height": "medium",
         "overlay_opacity": 0,
         "dark_text": true,
@@ -70,6 +72,7 @@
         "eyebrow": "Just landed",
         "title": "New in",
         "text": "",
+        "collection": "",
         "layout": "carousel",
         "limit": 10,
         "columns": 4,
@@ -82,31 +85,37 @@
         "mood1": {
           "type": "mood",
           "settings": {
+            "collection": "",
+            "link": "",
+            "product": "vintage-inspired-polka-dot-mini-dress",
             "title": "Polka dot dreams",
             "subtitle": "Dotty dresses, sets & halters",
             "cta": "Shop the mood",
-            "style": "polka",
-            "product": "vintage-inspired-polka-dot-mini-dress"
+            "style": "polka"
           }
         },
         "mood2": {
           "type": "mood",
           "settings": {
+            "collection": "",
+            "link": "",
+            "product": "sweetheart-pink-bow-peplum-top-lace-trim-mini-skirt-set",
             "title": "Soft & sweet",
             "subtitle": "Bows, lace & pastel knits",
             "cta": "Shop the mood",
-            "style": "pink",
-            "product": "sweetheart-pink-bow-peplum-top-lace-trim-mini-skirt-set"
+            "style": "pink"
           }
         },
         "mood3": {
           "type": "mood",
           "settings": {
+            "collection": "",
+            "link": "",
+            "product": "adorable-princess-bow-detailed-knee-high-boots",
             "title": "Princess steps",
             "subtitle": "Platforms, boots & ribbons",
             "cta": "Shop the mood",
-            "style": "cream",
-            "product": "adorable-princess-bow-detailed-knee-high-boots"
+            "style": "cream"
           }
         }
       },
@@ -129,6 +138,7 @@
         "eyebrow": "Most loved",
         "title": "Best sellers",
         "text": "",
+        "collection": "",
         "layout": "grid",
         "limit": 8,
         "columns": 4,
@@ -139,8 +149,8 @@
       "type": "dot-divider",
       "settings": {
         "shape": "scallop",
-        "bg": "#FCE9EE",
-        "dot": "#FFFFFF",
+        "bg": "#fce9ee",
+        "dot": "#ffffff",
         "height": 36
       }
     },
@@ -189,8 +199,8 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Sofia R.",
             "quote": "The polka dot set is even cuter in person — the fabric is so soft and it fits like a dream.",
+            "author": "Sofia R.",
             "product": "sweetheart-pink-polka-dot-halter-top-mini-skirt-set"
           }
         },
@@ -198,8 +208,8 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Maya L.",
             "quote": "Fast shipping and everything came wrapped so prettily. My new favourite shop!",
+            "author": "Maya L.",
             "product": "vintage-inspired-polka-dot-mini-dress"
           }
         },
@@ -207,8 +217,8 @@
           "type": "review",
           "settings": {
             "rating": 5,
-            "author": "Chloe T.",
             "quote": "Exactly the coquette vibe I wanted. I've had so many compliments on these boots.",
+            "author": "Chloe T.",
             "product": "adorable-princess-bow-detailed-knee-high-boots"
           }
         }
@@ -271,7 +281,7 @@
         "b4"
       ],
       "settings": {
-        "bg": "#FCE9EE"
+        "bg": "#fce9ee"
       }
     },
     "newsletter": {
