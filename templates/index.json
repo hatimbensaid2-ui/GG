@@ -64,21 +64,15 @@
           "settings": {
             "product": "dreamy-princess-pink-high-heel-platforms"
           }
-        },
-        "p3": {
-          "type": "product",
-          "settings": {
-            "product": "vintage-inspired-rose-garden-3d-applique-knit-cardigan"
-          }
         }
       },
       "block_order": [
         "p1",
-        "p2",
-        "p3"
+        "p2"
       ],
       "settings": {
         "background": "soft",
+        "image": "shopify://shop_images/mhappi_1784610361_3945917264089692567_1537344256.jpg",
         "sticker": "The dotty edit",
         "reverse": false,
         "eyebrow": "Complete the look",
