@@ -11,12 +11,6 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {
-        "rating_source": "static",
-        "rating_text": "4.9 (1,200+ reviews)",
-        "meta_shipping": "Free UK shipping over £60",
-        "meta_returns": "30-day easy returns"
-      },
       "blocks": {
         "desc": {
           "type": "description",
@@ -41,10 +35,49 @@
         "desc",
         "size",
         "ship"
-      ]
+      ],
+      "settings": {
+        "rating_source": "static",
+        "rating_text": "4.9 (1,200+ reviews)",
+        "show_reviews": true,
+        "reviews_title": "What the girls are saying",
+        "show_size_guide": true,
+        "show_vendor": true,
+        "show_dynamic_checkout": true,
+        "show_sticky_atc": true,
+        "show_meta": true,
+        "meta_shipping": "Free UK shipping over £60",
+        "meta_returns": "30-day easy returns",
+        "show_bundle": true,
+        "bundle_title": "Complete your fit",
+        "show_related": true
+      }
+    },
+    "1790229965ca08ea07": {
+      "type": "apps",
+      "blocks": {
+        "loox_reviews_loox_dynamic_section_yJWAAK": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "settings": {
+            "reviews_to_display": "",
+            "default_tab": "automatic",
+            "only_photos": false,
+            "aggregated": false,
+            "limit": 20,
+            "hide_thumbnails": false,
+            "maxwidth": 1080,
+            "is_sample": true
+          }
+        }
+      },
+      "block_order": [
+        "loox_reviews_loox_dynamic_section_yJWAAK"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "1790229965ca08ea07"
   ]
 }
