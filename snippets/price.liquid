@@ -1,17 +1,25 @@
+{%- comment -%}
+  Renders a product price.
+  Accepts: product (required), large (optional boolean)
+{%- endcomment -%}
 {%- liquid
-  assign target = product | default: variant
+  assign target = product.selected_or_first_available_variant
+  assign price = target.price | default: product.price
   assign compare = target.compare_at_price
-  assign price = target.price
-  if variant
-    assign compare = variant.compare_at_price
-    assign price = variant.price
+  assign on_sale = false
+  if compare > price
+    assign on_sale = true
+  endif
+  assign varies = false
+  if product.price_varies and large != true
+    assign varies = true
   endif
 -%}
-<div class="price {% if large %}price--large{% endif %}" data-price>
-  {%- if compare > price -%}
-    <span class="price__sale">{{ price | money }}</span>
+<div class="price{% if large %} price--large{% endif %}" data-price>
+  {%- if on_sale -%}
+    <span class="price__sale">{% if varies %}{{ 'products.product.from' | t }} {% endif %}{{ price | money }}</span>
     <span class="price__compare">{{ compare | money }}</span>
   {%- else -%}
-    <span>{{ price | money }}</span>
+    <span>{% if varies %}{{ 'products.product.from' | t }} {% endif %}{{ price | money }}</span>
   {%- endif -%}
 </div>

@@ -1,79 +1,75 @@
 {%- comment -%}
-  Renders a product card.
-  Accepts: product (required)
+  Product card. Accepts: product (required)
 {%- endcomment -%}
 {%- liquid
-  assign ratio_class = ''
-  if settings.card_image_ratio == 'square'
-    assign ratio_class = 'product-card__media--square'
-  endif
-  assign second = product.media[1]
+  assign variant = product.selected_or_first_available_variant
   assign on_sale = false
   if product.compare_at_price > product.price
     assign on_sale = true
   endif
+  assign second = product.media[1]
 -%}
 <div class="product-card">
   <div class="product-card__media-wrap">
-  <a href="{{ product.url }}" class="product-card__media {{ ratio_class }}" aria-label="{{ product.title | escape }}">
-    <div class="product-card__badges">
-      {%- unless product.available -%}
-        <span class="badge badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+    <a href="{{ product.url }}" class="product-card__media" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_media -%}
+        <img class="product-card__img--one"
+          src="{{ product.featured_media | image_url: width: 600 }}"
+          srcset="{{ product.featured_media | image_url: width: 360 }} 360w, {{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 800 }} 800w"
+          sizes="(max-width: 749px) 50vw, 25vw"
+          alt="{{ product.featured_media.alt | default: product.title | escape }}" loading="lazy" width="600" height="800">
+        {%- if second and settings.card_hover_image -%}
+          <img class="product-card__img--two" src="{{ second | image_url: width: 600 }}" alt="" loading="lazy" width="600" height="800">
+        {%- endif -%}
       {%- else -%}
-        {%- if on_sale -%}
-          <span class="badge badge--sale">{{ 'products.product.sale' | t }}</span>
-        {%- endif -%}
-        {%- if product.tags contains 'new' -%}
-          <span class="badge">{{ 'products.product.new' | t }}</span>
-        {%- endif -%}
-      {%- endunless -%}
-    </div>
-    {%- if product.featured_media -%}
-      <img class="product-card__img--one"
-           src="{{ product.featured_media | image_url: width: 600 }}"
-           srcset="{{ product.featured_media | image_url: width: 300 }} 300w, {{ product.featured_media | image_url: width: 600 }} 600w, {{ product.featured_media | image_url: width: 900 }} 900w"
-           sizes="(max-width: 749px) 50vw, 25vw"
-           alt="{{ product.featured_media.alt | escape }}" loading="lazy" width="600" height="800">
-      {%- if settings.card_hover_swap and second -%}
-        <img class="product-card__img--two"
-             src="{{ second | image_url: width: 600 }}"
-             srcset="{{ second | image_url: width: 300 }} 300w, {{ second | image_url: width: 600 }} 600w"
-             sizes="(max-width: 749px) 50vw, 25vw"
-             alt="" loading="lazy" width="600" height="800">
+        {{ 'product-1' | placeholder_svg_tag }}
       {%- endif -%}
-    {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'product-card__img--one' }}
-    {%- endif -%}
-  </a>
+    </a>
 
-  {%- if settings.card_show_quick_add and product.available -%}
-    <div class="product-card__quick">
-      {%- if product.variants.size == 1 -%}
-        <button type="button" class="quick-add-btn" data-quick-add="{{ product.selected_or_first_available_variant.id }}">
-          {{ 'products.product.quick_add' | t }}
-        </button>
-      {%- else -%}
-        <a href="{{ product.url }}" class="quick-add-btn" style="display:block;text-align:center;">
-          {{ 'products.product.choose_options' | t }}
-        </a>
+    <div class="product-card__badges">
+      {%- if product.available == false -%}
+        <span class="badge badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- elsif on_sale -%}
+        {%- assign saving = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+        <span class="badge badge--sale">-{{ saving }}%</span>
       {%- endif -%}
+      {%- for tag in product.tags -%}
+        {%- assign t = tag | downcase -%}
+        {%- if t == 'bestseller' or t == 'best seller' -%}<span class="badge">{{ 'products.product.bestseller' | t }}</span>{%- endif -%}
+        {%- if t == 'new' -%}<span class="badge badge--new">{{ 'products.product.new' | t }}</span>{%- endif -%}
+      {%- endfor -%}
     </div>
-  {%- endif -%}
+
+    {%- if settings.card_quick_add and product.available -%}
+      <div class="product-card__quick">
+        {%- if product.has_only_default_variant -%}
+          <button type="button" class="quick-add-btn" data-quick-add="{{ variant.id }}">{{ 'products.product.quick_add' | t }}</button>
+        {%- else -%}
+          <a href="{{ product.url }}" class="quick-add-btn" style="display:block;text-align:center;">{{ 'products.product.choose_options' | t }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 
   <div class="product-card__info">
-    {%- if settings.card_show_vendor and product.vendor != blank -%}
-      <div class="product-card__vendor">{{ product.vendor }}</div>
-    {%- endif -%}
+    {%- if settings.card_show_vendor and product.vendor != blank -%}<div class="product-card__vendor">{{ product.vendor }}</div>{%- endif -%}
     <h3 class="product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
     {% render 'price', product: product %}
-    {%- assign color_opt = product.options_with_values | where: 'name', 'Color' | first -%}
-    {%- unless color_opt == blank -%}
+    {%- assign color_option = nil -%}
+    {%- for option in product.options_with_values -%}
+      {%- assign oname = option.name | downcase -%}
+      {%- if oname == 'color' or oname == 'colour' -%}{%- assign color_option = option -%}{%- endif -%}
+    {%- endfor -%}
+    {%- if color_option and color_option.values.size > 1 -%}
       <div class="product-card__swatches">
-        {%- for value in color_opt.values limit: 5 -%}
-          <span class="swatch" style="background:{{ value | downcase | split: ' ' | last }};" title="{{ value }}"></span>
+        {%- for value in color_option.values limit: 5 -%}
+          {%- if value.swatch.color -%}
+            <span class="swatch" style="background:{{ value.swatch.color }};" title="{{ value | escape }}"></span>
+          {%- else -%}
+            <span class="swatch" style="background:{{ value | handleize | split: '-' | last }};" title="{{ value | escape }}"></span>
+          {%- endif -%}
         {%- endfor -%}
       </div>
-    {%- endunless -%}
+    {%- endif -%}
   </div>
 </div>

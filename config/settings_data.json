@@ -8,57 +8,8 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {
-    "color_background": "#FFF8F5",
-    "color_background_alt": "#FCE9EE",
-    "color_text": "#3A2A2F",
-    "color_accent": "#E8A0B4",
-    "color_accent_dark": "#C25C7A",
-    "color_button": "#3A2A2F",
-    "color_button_text": "#FFF8F5",
-    "color_sale": "#C25C7A",
-    "color_border": "#EAD3D9",
-    "font_heading": "assistant_n7",
-    "font_body": "assistant_n4",
-    "font_heading_scale": 120,
-    "heading_uppercase": false,
-    "heading_letter_spacing": 0.5,
-    "page_width": 1400,
-    "spacing_sections": 64,
-    "corner_radius": 18,
-    "button_radius": 40,
-    "card_hover_swap": true,
-    "card_show_vendor": false,
-    "card_image_ratio": "portrait",
-    "card_show_quick_add": true,
-    "cart_type": "drawer",
-    "cart_free_shipping_bar": true,
-    "cart_free_shipping_threshold": 90,
-    "social_instagram": "https://www.instagram.com/girlgeousdotcom",
-    "social_tiktok": "",
-    "social_pinterest": "",
-    "social_youtube": "",
-    "social_facebook": "",
-    "content_for_index": [],
-    "blocks": {
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      }
-    }
-  },
+  "current": "Default",
   "presets": {
-    "Girlgeous": {
-      "color_background": "#FFF8F5",
-      "color_background_alt": "#FCE9EE",
-      "color_text": "#3A2A2F",
-      "color_accent": "#E8A0B4",
-      "color_accent_dark": "#C25C7A",
-      "color_button": "#3A2A2F",
-      "color_button_text": "#FFF8F5",
-      "color_sale": "#C25C7A",
-      "color_border": "#EAD3D9"
-    }
+    "Default": {}
   }
 }
