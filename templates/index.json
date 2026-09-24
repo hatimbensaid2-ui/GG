@@ -41,19 +41,6 @@
         "button_label": "Shop best sellers"
       }
     },
-    "new_in": {
-      "type": "featured-collection",
-      "settings": {
-        "eyebrow": "Just landed",
-        "title": "New in",
-        "text": "",
-        "collection": "",
-        "layout": "carousel",
-        "limit": 10,
-        "columns": 4,
-        "button_label": "Shop all new"
-      }
-    },
     "divider": {
       "type": "dot-divider",
       "settings": {
@@ -99,6 +86,19 @@
         "text": "Pick your size and add each piece straight to your bag.",
         "button_label": "Shop all outfits",
         "button_link": "shopify://collections/all"
+      }
+    },
+    "new_in": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just landed",
+        "title": "New in",
+        "text": "",
+        "collection": "",
+        "layout": "carousel",
+        "limit": 10,
+        "columns": 4,
+        "button_label": "Shop all new"
       }
     },
     "reviews": {
@@ -177,7 +177,7 @@
         "b4": {
           "type": "badge",
           "settings": {
-            "icon": "heart",
+            "icon": "sparkle",
             "title": "Wrapped with love",
             "text": "Every order, every time"
           }
