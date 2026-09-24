@@ -1,126 +1,130 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}" class="no-js">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="{{ settings.color_accent }}">
-    <link rel="canonical" href="{{ canonical_url }}">
-    {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
 
-    <title>
-      {{ page_title }}
-      {%- if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
-      {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
-      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
-    </title>
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
 
-    {%- if page_description -%}
-      <meta name="description" content="{{ page_description | escape }}">
-    {%- endif -%}
+  <title>
+    {{ page_title }}
+    {%- if current_tags %}{% assign tag_list = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: tag_list }}{% endif -%}
+    {%- if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
 
-    {% render 'meta-tags' %}
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  <meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
+  <meta property="og:description" content="{{ page_description | default: shop.description | default: shop.name | escape }}">
+  {%- if page_image -%}
+    <meta property="og:image" content="http:{{ page_image | image_url: width: 1200 }}">
+    <meta property="og:image:secure_url" content="https:{{ page_image | image_url: width: 1200 }}">
+  {%- endif -%}
+  <meta name="twitter:card" content="summary_large_image">
 
-    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+  {%- liquid
+    assign heading_font = settings.font_heading
+    assign body_font = settings.font_body
+    assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+    assign heading_scale = settings.heading_scale | divided_by: 100.0
+  -%}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font_bold | font_face: font_display: 'swap' }}
+  {{ heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 
-    {%- liquid
-      assign body_font = settings.font_body
-      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
-      assign heading_font = settings.font_heading
-    -%}
-    {%- style -%}
-      {{ body_font | font_face: font_display: 'swap' }}
-      {{ body_font_bold | font_face: font_display: 'swap' }}
-      {{ heading_font | font_face: font_display: 'swap' }}
+  <style>
+    :root {
+      --color-bg: {{ settings.color_bg }};
+      --color-bg-alt: {{ settings.color_bg_alt }};
+      --color-text: {{ settings.color_text }};
+      --color-border: {{ settings.color_border }};
+      --color-accent: {{ settings.color_accent }};
+      --color-accent-dark: {{ settings.color_accent_dark }};
+      --color-button: {{ settings.color_button }};
+      --color-button-text: {{ settings.color_button_text }};
+      --color-sale: {{ settings.color_sale }};
 
-      :root {
-        --color-bg: {{ settings.color_background }};
-        --color-bg-alt: {{ settings.color_background_alt }};
-        --color-text: {{ settings.color_text }};
-        --color-accent: {{ settings.color_accent }};
-        --color-accent-dark: {{ settings.color_accent_dark }};
-        --color-button: {{ settings.color_button }};
-        --color-button-text: {{ settings.color_button_text }};
-        --color-sale: {{ settings.color_sale }};
-        --color-border: {{ settings.color_border }};
+      --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+      --font-heading-weight: {{ heading_font.weight }};
+      --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+      --font-body-weight: {{ body_font.weight }};
+      --heading-scale: {{ heading_scale }};
+      --heading-transform: {{ settings.heading_transform }};
+      --heading-spacing: {% if settings.heading_transform == 'uppercase' %}.06em{% else %}0{% endif %};
 
-        --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
-        --font-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
-        --font-body-weight: {{ body_font.weight }};
-        --font-heading-weight: {{ heading_font.weight }};
-        --heading-scale: {{ settings.font_heading_scale | divided_by: 100.0 }};
-        --heading-spacing: {{ settings.heading_letter_spacing }}px;
-        --heading-transform: {% if settings.heading_uppercase %}uppercase{% else %}none{% endif %};
+      --page-width: {{ settings.page_width }}px;
+      --section-spacing: {{ settings.section_spacing }}px;
+      --radius: {{ settings.radius }}px;
+      --button-radius: {{ settings.button_radius }}px;
 
-        --page-width: {{ settings.page_width }}px;
-        --section-spacing: {{ settings.spacing_sections }}px;
-        --radius: {{ settings.corner_radius }}px;
-        --button-radius: {{ settings.button_radius }}px;
+      --dot-color: {{ settings.dot_color }};
+      --dot-color-on-pink: {{ settings.dot_color_on_pink }};
+      --dot-size: {{ settings.dot_size }}px;
+      --dot-gap: {{ settings.dot_gap }}px;
+    }
+  </style>
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ 'home.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    window.Girlgeous = {
+      moneyFormat: {{ shop.money_format | json }},
+      cartType: {{ settings.cart_type | json }},
+      freeShipThreshold: {% if settings.cart_free_shipping_bar and settings.free_shipping_threshold %}{{ settings.free_shipping_threshold | times: 100 | round }}{% else %}0{% endif %},
+      routes: {
+        root_url: {{ routes.root_url | json }},
+        cart_url: {{ routes.cart_url | json }},
+        cart_add_url: {{ routes.cart_add_url | append: '.js' | json }},
+        cart_change_url: {{ routes.cart_change_url | append: '.js' | json }},
+        search_url: {{ routes.search_url | json }}
+      },
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        added: {{ 'products.product.added' | t | json }},
+        youSaved: {{ 'sections.cart.you_saved' | t | json }},
+        noResults: {{ 'general.search.predictive_none' | t | json }},
+        suggestions: {{ 'general.search.suggestions' | t | json }},
+        collections: {{ 'general.search.collections' | t | json }},
+        products: {{ 'general.search.products' | t | json }},
+        searching: {{ 'general.search.searching' | t | json }}
       }
-    {%- endstyle -%}
+    };
+  </script>
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'carousel.js' | asset_url }}" defer="defer"></script>
 
-    {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
 
-    {%- unless settings.font_body.system? -%}<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>{%- endunless -%}
+<body class="template-{{ template.name | handle }}{% if settings.dots_announcement %} dots-announcement{% endif %}{% if settings.dots_scallops %} dots-scallops{% endif %}{% if settings.dots_cards %} dots-cards{% endif %}">
+  <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
-    {{ content_for_header }}
-  </head>
+  {% sections 'header-group' %}
 
-  <body class="template-{{ request.page_type | handle }}">
-    <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
 
-    {% sections 'header-group' %}
+  {% sections 'footer-group' %}
 
-    <main id="MainContent" class="content-for-layout" role="main" tabindex="-1">
-      {{ content_for_layout }}
-    </main>
-
-    {% sections 'footer-group' %}
-
-    {%- if settings.cart_type == 'drawer' -%}
-      {% render 'cart-drawer' %}
-    {%- endif -%}
-
-    <div id="SearchModal" class="search-modal" aria-hidden="true">
-      <div class="search-modal__overlay" data-search-close></div>
-      <div class="search-modal__panel">
-        <div class="search-modal__bar page-width">
-          <form action="{{ routes.search_url }}" method="get" role="search" class="search-modal__form" data-predictive-form>
-            <span class="search-modal__icon">{% render 'icon-search' %}</span>
-            <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" class="search-modal__input" autocomplete="off" data-predictive-input>
-            <button type="submit" class="search-modal__submit" aria-label="{{ 'general.search.submit' | t }}">{{ 'general.search.submit' | t }}</button>
-          </form>
-          <button class="search-modal__close" data-search-close aria-label="{{ 'accessibility.close' | t }}">{% render 'icon-close' %}</button>
-        </div>
-        <div class="search-modal__results page-width" data-predictive-results></div>
-      </div>
-    </div>
-
-    <script>
-      window.Girlgeous = {
-        routes: {
-          cart_add_url: '{{ routes.cart_add_url }}',
-          cart_change_url: '{{ routes.cart_change_url }}',
-          cart_url: '{{ routes.cart_url }}',
-          search_url: '{{ routes.search_url }}'
-        },
-        cartType: '{{ settings.cart_type }}',
-        freeShipThreshold: {{ settings.cart_free_shipping_threshold | default: 0 | times: 100 }},
-        moneyFormat: {{ shop.money_format | json }},
-        strings: {
-          addToCart: {{ 'products.product.add_to_cart' | t | json }},
-          soldOut: {{ 'products.product.sold_out' | t | json }},
-          added: {{ 'products.product.added' | t | json }},
-          youSaved: {{ 'sections.cart.you_saved' | t | json }},
-          searching: {{ 'general.search.searching' | t | json }},
-          noResults: {{ 'general.search.no_matches_short' | t | json }},
-          suggestions: {{ 'general.search.suggestions' | t | json }},
-          collections: {{ 'general.search.collections' | t | json }},
-          products: {{ 'general.search.products' | t | json }}
-        }
-      };
-    </script>
-    {{ 'theme.js' | asset_url | script_tag }}
-  </body>
+  {%- if settings.cart_type == 'drawer' -%}
+    {% render 'cart-drawer' %}
+  {%- endif -%}
+</body>
 </html>
